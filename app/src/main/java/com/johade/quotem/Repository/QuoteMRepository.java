@@ -5,12 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import com.johade.quotem.Models.Question;
 import com.johade.quotem.Models.QuestionResponse;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuoteMRepository {
-    private MutableLiveData<QuestionResponse> questionData;
+    private MutableLiveData<List<Question>> questionData;
     QuoteMService apiService;
 
     public QuoteMRepository(){
@@ -18,14 +20,14 @@ public class QuoteMRepository {
         apiService = RetrofitSingleton.getRetrofitInstance().create(QuoteMService.class);
     }
 
-    public MutableLiveData<QuestionResponse> getQuotes(){
+    public MutableLiveData<List<Question>> getQuotes(){
         Call<QuestionResponse> call = apiService.getQuestions();
         call.enqueue(new Callback<QuestionResponse>() {
             @Override
             public void onResponse(Call<QuestionResponse> call, Response<QuestionResponse> response) {
                 if(response.isSuccessful()){
                     QuestionResponse reply = response.body();
-                    questionData.setValue(reply);
+                    questionData.setValue(reply.questions);
                 }
             }
 

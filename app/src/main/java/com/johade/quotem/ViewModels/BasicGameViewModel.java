@@ -3,14 +3,9 @@ package com.johade.quotem.ViewModels;
 import android.app.Application;
 import android.os.CountDownTimer;
 import android.os.Handler;
-
 import com.johade.quotem.Models.Question;
-import com.johade.quotem.Models.QuestionResponse;
 import com.johade.quotem.Repository.QuoteMRepository;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -27,14 +22,16 @@ public class BasicGameViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> livesCount = new MutableLiveData<>();
     private final MutableLiveData<Integer> remainingTime = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isGameOver = new MutableLiveData<>();
-    private MutableLiveData<QuestionResponse> questions;
-
-    private List<Question> myQuestions = new ArrayList<>();
+    private MutableLiveData<List<Question>> questions = new MutableLiveData<>();
 
     public BasicGameViewModel(Application application) {
         super(application);
         this.application = application;
         repository = new QuoteMRepository();
+        initalSetup();
+    }
+
+    private void initalSetup(){
         gameInProgress.setValue(false);
         remainingTime.setValue(25);
         questionNumber.setValue(0);
@@ -77,7 +74,7 @@ public class BasicGameViewModel extends AndroidViewModel {
         return startCountDown;
     }
 
-    public LiveData<QuestionResponse> getQuestions() {
+    public LiveData<List<Question>> getQuestions() {
         return questions;
     }
 
@@ -107,13 +104,6 @@ public class BasicGameViewModel extends AndroidViewModel {
 
     public void startGame() {
         gameTimer.start();
-    }
-
-    public void setQuestions(QuestionResponse response) {
-        if(myQuestions.isEmpty()) {
-            myQuestions = response.questions;
-            nextQuestion();
-        }
     }
 
     public boolean checkAnswer(String pickedAnswer){
@@ -151,13 +141,15 @@ public class BasicGameViewModel extends AndroidViewModel {
             gameTimer.start();
         }
 
-        int currentQuestionNumber = questionNumber.getValue() + 1;
-        questionNumber.setValue(currentQuestionNumber);
-
-        if (!myQuestions.isEmpty()) {
-            Question poppedQuestion = myQuestions.get(myQuestions.size() - 1);
-            myQuestions.remove(myQuestions.size() - 1);
+        if (!questions.getValue().isEmpty()) {
+            Question poppedQuestion = questions.getValue().get(questions.getValue().size() - 1);
+            questions.getValue().remove(questions.getValue().size() - 1);
             currentQuestion.setValue(poppedQuestion);
+
+            int currentQuestionNumber = questionNumber.getValue() + 1;
+            questionNumber.setValue(currentQuestionNumber);
+        }else{
+            gameOver();
         }
     }
 
@@ -165,4 +157,11 @@ public class BasicGameViewModel extends AndroidViewModel {
         isGameOver.setValue(true);
         gameTimer.cancel();
     }
+
+    public void replay(){
+        initalSetup();
+    }
+
+
+    //Just one more thing sophie
 }
