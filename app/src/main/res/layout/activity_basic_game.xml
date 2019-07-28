@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_color">
+    <include
+        android:id="@+id/toobar"
+        layout="@layout/basic_game_toolbar" />
+    <include
+        android:id="@+id/startView"
+        layout="@layout/content_starting" />
+    <include
+        layout="@layout/question_view"
+        android:id="@+id/game_view"
+        android:visibility="invisible" />
+    <include
+        android:id="@+id/gameOverView"
+        layout="@layout/content_game_over"
+        android:visibility="invisible" />
+</LinearLayout>

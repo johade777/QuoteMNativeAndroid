@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">QuoteM</string>
+    <string name="action_settings">Settings</string>
+    <color name="background_color">#244887</color>
+</resources>
