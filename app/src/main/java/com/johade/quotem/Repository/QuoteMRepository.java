@@ -1,23 +1,44 @@
 package com.johade.quotem.Repository;
-import androidx.lifecycle.LiveData;
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 
+import com.johade.quotem.Persistance.AppDatabase;
+import com.johade.quotem.Persistance.HighScoreDao;
+import com.johade.quotem.Models.Highscore;
 import com.johade.quotem.Models.Question;
 import com.johade.quotem.Models.QuestionResponse;
-
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuoteMRepository {
     private MutableLiveData<List<Question>> questionData;
+    private MutableLiveData<List<Highscore>> highScores;
+    Context applicationContext;
     QuoteMService apiService;
+    AppDatabase applicationDatabase;
+    HighScoreDao highScoreDao;
 
-    public QuoteMRepository(){
+
+    public QuoteMRepository(Context applicationContext){
+        this.applicationContext = applicationContext;
         questionData = new MutableLiveData<>();
         apiService = RetrofitSingleton.getRetrofitInstance().create(QuoteMService.class);
+        applicationDatabase = AppDatabase.getInstance(applicationContext);
+        highScoreDao = applicationDatabase.highScoreDao();
+    }
+
+    public Completable insertHighscore(Highscore score){
+        return highScoreDao.insert(score);
+    }
+
+    public Flowable<List<Highscore>> getHighScores(){
+        return highScoreDao.getAllHighScores();
     }
 
     public MutableLiveData<List<Question>> getQuotes(){

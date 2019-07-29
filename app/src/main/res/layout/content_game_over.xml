@@ -1,40 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@color/background_color"
+    android:layout_margin="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:text="Game Over"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView1"
-        android:gravity="center" />
-    <TextView
-        android:text="Try Again, YOU CAN DO IT!"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/white"
+        android:orientation="vertical"
+        android:id="@+id/ScoreLayout">
+        <TextView
+            android:text="Game Over"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:gravity="center" />
+        <TextView
+            android:text="Try Again, YOU CAN DO IT!"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/textView2" />
+        <TextView
+            android:text="Correct: 0%"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/correctCount" />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/textView2" />
-    <TextView
-        android:text="Correct: 0%"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/correctCount" />
+        android:id="@+id/highScoreView"
+        android:layout_below="@id/ScoreLayout"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:text="New High Score!"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center" />
+        <EditText
+            android:id="@+id/highscoreUsernameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/white"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+        <Button
+            android:id="@+id/saveScoreButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Save Score" />
+    </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum = "2"
-        android:id="@+id/linearLayout1" >
+        android:layout_below="@id/highScoreView"
+        android:id="@+id/newGameView" >
         <Button
             android:text="Play Again"
             android:layout_width="wrap_content"
@@ -49,4 +89,4 @@
             android:id="@+id/mainScreen" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

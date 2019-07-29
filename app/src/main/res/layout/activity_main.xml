@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views_Activities.MainActivity">
-    <LinearLayout
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/questionView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Main Menu"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/playGame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Play Game" />
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="wrap_content"
+        android:text="Main Menu"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/questionView"
+        android:gravity="center_horizontal" />
+    <TableLayout
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1"
+        android:layout_margin="10sp">
+        <TableRow>
+            <Button
+                android:id="@+id/playGame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:text="Play Game" />
+        </TableRow>
+        <TableRow>
+            <Button
+                android:id="@+id/highScores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="High Scores" />
+            <Button
+                android:id="@+id/settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Settings" />
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>

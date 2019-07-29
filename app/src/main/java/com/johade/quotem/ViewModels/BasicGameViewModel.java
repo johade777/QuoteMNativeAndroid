@@ -1,18 +1,22 @@
 package com.johade.quotem.ViewModels;
 
-import android.app.Application;
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
+
+import com.johade.quotem.Models.Highscore;
 import com.johade.quotem.Models.Question;
 import com.johade.quotem.Repository.QuoteMRepository;
 import java.util.List;
-import androidx.lifecycle.AndroidViewModel;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-public class BasicGameViewModel extends AndroidViewModel {
+import io.reactivex.Completable;
+
+public class BasicGameViewModel extends ViewModel {
     private QuoteMRepository repository;
-    private Application application;
     private CountDownTimer startGameCountDown;
     private CountDownTimer gameTimer;
     private final MutableLiveData<Integer> startCountDown = new MutableLiveData<>();
@@ -23,11 +27,10 @@ public class BasicGameViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> remainingTime = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isGameOver = new MutableLiveData<>();
     private MutableLiveData<List<Question>> questions = new MutableLiveData<>();
+    private int playerScore;
 
-    public BasicGameViewModel(Application application) {
-        super(application);
-        this.application = application;
-        repository = new QuoteMRepository();
+    public BasicGameViewModel(Context applicationContext) {
+        repository = new QuoteMRepository(applicationContext);
         initalSetup();
     }
 
@@ -37,6 +40,7 @@ public class BasicGameViewModel extends AndroidViewModel {
         questionNumber.setValue(0);
         livesCount.setValue(3);
         isGameOver.setValue(false);
+        playerScore = 0;
         startGameCountDown = new CountDownTimer(4000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -64,6 +68,11 @@ public class BasicGameViewModel extends AndroidViewModel {
 
         gameInProgress.setValue(false);
         questions = repository.getQuotes();
+    }
+
+    public Completable saveUserHighScore(String username){
+        Highscore myHighScore = new Highscore(username, playerScore);
+        return repository.insertHighscore(myHighScore);
     }
 
     public LiveData<Boolean> getGameInProgress() {
@@ -114,6 +123,8 @@ public class BasicGameViewModel extends AndroidViewModel {
             if(currentLives == 0){
                 gameOver();
             }
+        }else{
+            playerScore++;
         }
 
         gameTimer.cancel();
@@ -162,6 +173,4 @@ public class BasicGameViewModel extends AndroidViewModel {
         initalSetup();
     }
 
-
-    //Just one more thing sophie
 }

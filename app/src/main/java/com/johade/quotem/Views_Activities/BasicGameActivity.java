@@ -2,23 +2,28 @@ package com.johade.quotem.Views_Activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.johade.quotem.ViewModels.ViewModelFactory;
 import com.johade.quotem.Models.Question;
-import com.johade.quotem.Models.QuestionResponse;
 import com.johade.quotem.R;
 import com.johade.quotem.ViewModels.BasicGameViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class BasicGameActivity extends AppCompatActivity {
     private BasicGameViewModel mViewModel;
@@ -29,6 +34,8 @@ public class BasicGameActivity extends AppCompatActivity {
     private TextView questionCountTextView;
     private TextView gameTimerTextView;
     private TextView livesTextView;
+    private EditText highScoreUsernameEditText;
+    private Button saveHighScore;
     private Button playAgain;
     private Button answerOne;
     private Button answerTwo;
@@ -37,7 +44,9 @@ public class BasicGameActivity extends AppCompatActivity {
     private View startView;
     private View gameView;
     private View gameOverView;
+    private View highScoreView;
     private Observer gameQuestionObserver;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,8 @@ public class BasicGameActivity extends AppCompatActivity {
         questionCountTextView = findViewById(R.id.questionCount);
         gameTimerTextView = findViewById(R.id.timerText);
         livesTextView = findViewById(R.id.lives);
+        saveHighScore = findViewById(R.id.saveScoreButton);
+        highScoreUsernameEditText = findViewById(R.id.highscoreUsernameEditText);
         playAgain = findViewById(R.id.playAgain);
         answerOne = findViewById(R.id.answerOne);
         answerTwo = findViewById(R.id.answerTwo);
@@ -58,6 +69,10 @@ public class BasicGameActivity extends AppCompatActivity {
         startView = findViewById(R.id.startView);
         gameView = findViewById(R.id.game_view);
         gameOverView = findViewById(R.id.gameOverView);
+        highScoreView = findViewById(R.id.highScoreView);
+
+        ViewModelFactory myViewModelFactory = new ViewModelFactory(getApplicationContext());
+        mViewModel = ViewModelProviders.of(this, myViewModelFactory).get(BasicGameViewModel.class);
 
         View.OnClickListener clickedAnswerListener = v -> {
             Button b = (Button) v;
@@ -72,7 +87,6 @@ public class BasicGameActivity extends AppCompatActivity {
             }
         };
 
-        mViewModel = ViewModelProviders.of(this).get(BasicGameViewModel.class);
         gameQuestionObserver = new Observer<List<Question>>()  {
             @Override
             public void onChanged(List<Question> response) {
@@ -149,6 +163,12 @@ public class BasicGameActivity extends AppCompatActivity {
         answerTwo.setOnClickListener(clickedAnswerListener);
         answerThree.setOnClickListener(clickedAnswerListener);
         answerFour.setOnClickListener(clickedAnswerListener);
+        saveHighScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveUserHighScore();
+            }
+        });
 
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,6 +178,23 @@ public class BasicGameActivity extends AppCompatActivity {
         });
 
         mViewModel.startNewGame();
+    }
+
+    private void SaveUserHighScore() {
+        String username = highScoreUsernameEditText.getText().toString().trim();
+        if(username.isEmpty()){
+            Toast.makeText(this, "Please enter name for high score", Toast.LENGTH_SHORT).show();
+            return;
+        }else{
+            mDisposable.add(mViewModel.saveUserHighScore(username)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() ->
+                                    Toast.makeText(BasicGameActivity.this, "Inserted", Toast.LENGTH_SHORT).show(),
+                            throwable -> Log.e("HIGH SCORE ACTIVITY", "Unable to retrieve high scores", throwable)
+                    ));
+        }
     }
 
     private Button findCorrectButton(String correctMovie) {
@@ -247,6 +284,13 @@ public class BasicGameActivity extends AppCompatActivity {
         mViewModel.replay();
         mViewModel.getQuestions().observe(this, gameQuestionObserver);
         mViewModel.startNewGame();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        mDisposable.clear();
     }
 }
 
