@@ -3,10 +3,14 @@ package com.johade.quotem.ViewModels;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.johade.quotem.Models.Highscore;
 import com.johade.quotem.Models.Question;
 import com.johade.quotem.Repository.QuoteMRepository;
+import com.johade.quotem.Views_Activities.BasicGameActivity;
+
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -14,105 +18,70 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class BasicGameViewModel extends ViewModel {
     private QuoteMRepository repository;
-    private CountDownTimer startGameCountDown;
     private CountDownTimer gameTimer;
-    private final MutableLiveData<Integer> startCountDown = new MutableLiveData<>();
+    private CompositeDisposable mDisposable = new CompositeDisposable();
     private final MutableLiveData<Boolean> gameInProgress = new MutableLiveData<>();
     private final MutableLiveData<Question> currentQuestion = new MutableLiveData<>();
     private final MutableLiveData<Integer> questionNumber = new MutableLiveData<>();
     private final MutableLiveData<Integer> livesCount = new MutableLiveData<>();
     private final MutableLiveData<Integer> remainingTime = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isGameOver = new MutableLiveData<>();
-    private MutableLiveData<List<Question>> questions = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> gameSetupComplete = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> newHighscore = new MutableLiveData<>();
+    private Highscore toBeDeletedScore;
+    private List<Highscore> myHighScores;
+    private LiveData<List<Question>> questions;
     private int playerScore;
 
     public BasicGameViewModel(Context applicationContext) {
         repository = new QuoteMRepository(applicationContext);
-        initalSetup();
+        questions = repository.getQuestions();
+        mDisposable.add(repository.getHighScores()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mScores ->
+                                setHighscores(mScores),
+                        throwable -> Log.e("BasicGameViewModel", "Unable to retrieve high scores", throwable)
+                ));
     }
-
-    private void initalSetup(){
-        gameInProgress.setValue(false);
-        remainingTime.setValue(25);
-        questionNumber.setValue(0);
-        livesCount.setValue(3);
-        isGameOver.setValue(false);
-        playerScore = 0;
-        startGameCountDown = new CountDownTimer(4000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                startCountDown.setValue((int) (millisUntilFinished / 1000));
-            }
-
-            @Override
-            public void onFinish() {
-                gameInProgress.setValue(true);
-                startGame();
-            }
-        };
-
-        gameTimer = new CountDownTimer(25000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                remainingTime.setValue((int)millisUntilFinished / 1000);
-            }
-
-            @Override
-            public void onFinish() {
-                gameOver();
-            }
-        };
-
-        gameInProgress.setValue(false);
-        questions = repository.getQuotes();
+    public LiveData<Boolean> getIsNewHighscore(){
+        return newHighscore;
     }
-
-    public Completable saveUserHighScore(String username){
-        Highscore myHighScore = new Highscore(username, playerScore);
-        return repository.insertHighscore(myHighScore);
-    }
-
     public LiveData<Boolean> getGameInProgress() {
         return gameInProgress;
     }
-
-    public LiveData<Integer> getStartCountDown() {
-        return startCountDown;
-    }
-
     public LiveData<List<Question>> getQuestions() {
         return questions;
     }
-
     public LiveData<Question> getCurrentQuestion(){
         return currentQuestion;
     }
-
     public LiveData<Integer> getLivesCount(){
         return livesCount;
     }
-
     public LiveData<Integer> getQuestionNumber(){
         return questionNumber;
     }
-
     public LiveData<Integer> getRemainingTime(){
         return remainingTime;
     }
-
-    public LiveData<Boolean> getIsGameOVer(){
+    public LiveData<Boolean> getIsGameOver(){
         return isGameOver;
     }
+    public LiveData<Boolean> getIsSetupComplete() {return gameSetupComplete; }
 
-    public void startNewGame() {
-        startGameCountDown.start();
+    public int getPlayerScore(){
+        return this.playerScore;
     }
 
-    public void startGame() {
-        gameTimer.start();
+    public void setHighscores(List<Highscore> scores){
+        myHighScores = scores;
     }
 
     public boolean checkAnswer(String pickedAnswer){
@@ -128,30 +97,13 @@ public class BasicGameViewModel extends ViewModel {
         }
 
         gameTimer.cancel();
-        (new Handler()).postDelayed(this::nextQuestion, 2500);
+        if(gameInProgress.getValue()) {
+            (new Handler()).postDelayed(this::resumeGame, 2500);
+        }
         return isCorrect;
     }
 
-    public String getCorrectMovie() {
-        return currentQuestion.getValue().answer;
-    }
-
     public void nextQuestion() {
-        if(questionNumber.getValue() != 0){
-            gameTimer = new CountDownTimer(remainingTime.getValue() * 1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    remainingTime.setValue((int)millisUntilFinished / 1000);
-                }
-
-                @Override
-                public void onFinish() {
-                    gameOver();
-                }
-            };
-            gameTimer.start();
-        }
-
         if (!questions.getValue().isEmpty()) {
             Question poppedQuestion = questions.getValue().get(questions.getValue().size() - 1);
             questions.getValue().remove(questions.getValue().size() - 1);
@@ -164,13 +116,112 @@ public class BasicGameViewModel extends ViewModel {
         }
     }
 
+    public String getCorrectMovie() {
+        return currentQuestion.getValue().answer;
+    }
+
+    public void gameIsReady() {
+        gameSetupComplete.setValue(true);
+    }
+
+    private void getNewQuotes(){
+        gameSetupComplete.setValue(false);
+        repository.getQuotes();
+    }
+
+    public void newGame() {
+        if(gameTimer != null){
+            gameTimer.cancel();
+        }
+        newHighscore.setValue(false);
+        gameInProgress.setValue(false);
+        remainingTime.setValue(29);
+        questionNumber.setValue(0);
+        livesCount.setValue(3);
+        isGameOver.setValue(false);
+        playerScore = 0;
+        gameTimer = new CountDownTimer(29000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if((millisUntilFinished / 1000 <= 25) && !gameInProgress.getValue()){
+                    gameInProgress.setValue(true);
+                }
+                remainingTime.setValue((int)millisUntilFinished / 1000);
+            }
+
+            @Override
+            public void onFinish() {
+                gameOver();
+            }
+        };
+        getNewQuotes();
+    }
+
+    public void startGame(){
+        nextQuestion();
+        gameTimer.start();
+    }
+
+    private void resumeGame(){
+        if(!isGameOver.getValue()) {
+            gameTimer = new CountDownTimer(remainingTime.getValue() * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    if((millisUntilFinished / 1000 <= 25) && !gameInProgress.getValue()){
+                        gameInProgress.setValue(true);
+                    }
+                    remainingTime.setValue((int) millisUntilFinished / 1000);
+                }
+
+                @Override
+                public void onFinish() {
+                    gameOver();
+                }
+            };
+            gameTimer.start();
+            nextQuestion();
+        }
+    }
+
     private void gameOver(){
+        checkIfNewHighScore();
         isGameOver.setValue(true);
         gameTimer.cancel();
     }
 
-    public void replay(){
-        initalSetup();
+    //Should really be split into multiple methods for testability
+    private void checkIfNewHighScore(){
+        if(playerScore == 0){
+            return;
+        }
+
+        if(myHighScores.size() < 10){
+            newHighscore.setValue(true);
+            return;
+        }
+
+        for(int i = 0; i < myHighScores.size(); i++){
+            if(playerScore >= myHighScores.get(myHighScores.size() - 1 - i).getScore()){
+                toBeDeletedScore = myHighScores.get(i);
+                newHighscore.setValue(true);
+            }
+        }
     }
 
+    public void saveUserHighScore(String username){
+        deleteHighscore();
+        repository.insertHighscore(new Highscore(username, playerScore));
+
+    }
+
+    public void deleteHighscore() {
+        if(toBeDeletedScore == null){
+            return;
+        }
+        repository.deleteHighscore(toBeDeletedScore);
+    }
+
+    public void replay(){
+        newGame();
+    }
 }

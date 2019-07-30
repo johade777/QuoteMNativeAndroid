@@ -1,6 +1,10 @@
 package com.johade.quotem.Repository;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.johade.quotem.Persistance.AppDatabase;
@@ -9,21 +13,21 @@ import com.johade.quotem.Models.Highscore;
 import com.johade.quotem.Models.Question;
 import com.johade.quotem.Models.QuestionResponse;
 import java.util.List;
-
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuoteMRepository {
     private MutableLiveData<List<Question>> questionData;
-    private MutableLiveData<List<Highscore>> highScores;
+
     Context applicationContext;
     QuoteMService apiService;
     AppDatabase applicationDatabase;
     HighScoreDao highScoreDao;
-
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     public QuoteMRepository(Context applicationContext){
         this.applicationContext = applicationContext;
@@ -33,15 +37,34 @@ public class QuoteMRepository {
         highScoreDao = applicationDatabase.highScoreDao();
     }
 
-    public Completable insertHighscore(Highscore score){
-        return highScoreDao.insert(score);
+    public void insertHighscore(Highscore score){
+        new InsertScore(highScoreDao).execute(score);
+        //return highScoreDao.insert(score);
     }
 
+    public void deleteHighscore(Highscore score){
+        highScoreDao.delete(score);
+    }
+
+    public LiveData<List<Question>> getQuestions(){
+        return questionData;
+    }
     public Flowable<List<Highscore>> getHighScores(){
         return highScoreDao.getAllHighScores();
     }
 
-    public MutableLiveData<List<Question>> getQuotes(){
+//    public Flowable<Highscore> getLowestHighscore(){
+//        mDisposable.add(highScoreDao.getLowestHighScore()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(lowest -> lowestHighScore.setValue(lowest),
+//                        throwable -> Log.e("QuoteMReposity", "Unable to retrieve Low Score", throwable)
+//                ));
+//        return highScoreDao.getLowestHighScore();
+//    }
+
+    public void getQuotes(){
         Call<QuestionResponse> call = apiService.getQuestions();
         call.enqueue(new Callback<QuestionResponse>() {
             @Override
@@ -57,7 +80,19 @@ public class QuoteMRepository {
                 System.out.println("Failure");
             }
         });
+    }
 
-        return questionData;
+    private static class InsertScore extends AsyncTask<Highscore, Void, Void>{
+        private HighScoreDao highScoreDao;
+
+        private InsertScore(HighScoreDao highScoreDao){
+            this.highScoreDao = highScoreDao;
+        }
+
+        @Override
+        protected Void doInBackground(Highscore... score) {
+            highScoreDao.insert(score[0]);
+            return null;
+        }
     }
 }

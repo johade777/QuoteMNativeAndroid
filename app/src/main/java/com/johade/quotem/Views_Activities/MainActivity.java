@@ -4,18 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
 import com.johade.quotem.Models.Highscore;
 import com.johade.quotem.R;
 import com.johade.quotem.Repository.QuoteMRepository;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     private Button playGameButton;
@@ -60,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         QuoteMRepository repository = new QuoteMRepository(getApplicationContext());
         Highscore temp = new Highscore("Ubar", 3);
 
-        mDisposable.add(repository.insertHighscore(temp)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() ->
-                                Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_SHORT).show(),
-                        throwable -> Log.e("HIGH SCORE ACTIVITY", "Unable to retrieve high scores", throwable)
-                ));
+//        mDisposable.add(repository.insertHighscore(temp)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(() ->
+//                                Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_SHORT).show(),
+//                        throwable -> Log.e("HIGH SCORE ACTIVITY", "Unable to retrieve high scores", throwable)
+//                ));
 
     }
 

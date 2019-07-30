@@ -34,6 +34,7 @@ public class BasicGameActivity extends AppCompatActivity {
     private TextView questionCountTextView;
     private TextView gameTimerTextView;
     private TextView livesTextView;
+    private TextView correctCountTextView;
     private EditText highScoreUsernameEditText;
     private Button saveHighScore;
     private Button playAgain;
@@ -41,6 +42,7 @@ public class BasicGameActivity extends AppCompatActivity {
     private Button answerTwo;
     private Button answerThree;
     private Button answerFour;
+    private Button mainMenuButton;
     private View startView;
     private View gameView;
     private View gameOverView;
@@ -58,7 +60,9 @@ public class BasicGameActivity extends AppCompatActivity {
         questionCountTextView = findViewById(R.id.questionCount);
         gameTimerTextView = findViewById(R.id.timerText);
         livesTextView = findViewById(R.id.lives);
+        correctCountTextView = findViewById(R.id.correctCount);
         saveHighScore = findViewById(R.id.saveScoreButton);
+        mainMenuButton = findViewById(R.id.mainMenu);
         highScoreUsernameEditText = findViewById(R.id.highscoreUsernameEditText);
         playAgain = findViewById(R.id.playAgain);
         answerOne = findViewById(R.id.answerOne);
@@ -74,47 +78,44 @@ public class BasicGameActivity extends AppCompatActivity {
         ViewModelFactory myViewModelFactory = new ViewModelFactory(getApplicationContext());
         mViewModel = ViewModelProviders.of(this, myViewModelFactory).get(BasicGameViewModel.class);
 
-        View.OnClickListener clickedAnswerListener = v -> {
-            Button b = (Button) v;
-            disableButtons();
-            boolean isCorrect = mViewModel.checkAnswer(b.getText().toString());
-            if(isCorrect){
-                highlightRightWrong(b);
-            }else{
-                String correctMovie = mViewModel.getCorrectMovie();
-                Button correctMovieButton = findCorrectButton(correctMovie);
-                highlightRightWrong(correctMovieButton);
-            }
-        };
-
-        gameQuestionObserver = new Observer<List<Question>>()  {
+        gameQuestionObserver = new Observer<List<Question>>() {
             @Override
             public void onChanged(List<Question> response) {
-                mViewModel.nextQuestion();
+                mViewModel.gameIsReady();
             }
         };
-
+        mViewModel.getIsSetupComplete().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean gameReady) {
+                if(gameReady) {
+                    mViewModel.startGame();
+                }
+            }
+        });
         mViewModel.getGameInProgress().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean gameInProgress) {
-                if(gameInProgress){
+                if (gameInProgress) {
                     showGameView();
                 }
             }
         });
-
-        mViewModel.getStartCountDown().observe(this, new Observer<Integer>() {
+        mViewModel.getRemainingTime().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(Integer countdown) {
-                if(countdown == 1){
-                    startTextTextView.setText("Here We Go!!!");
+            public void onChanged(Integer remainingTime) {
+                if (remainingTime >= 25) {
+                    int startTimer = remainingTime - 25;
+                    gameTimerTextView.setText(String.format("%d:%02d", 00, 25));
+                    if (startTimer <= 1) {
+                        startTextTextView.setText("Here We Go!!!");
+                    }
+                    startTimerTextView.setText(startTimer + "");
+                } else {
+                    gameTimerTextView.setText(String.format("%d:%02d", 00, remainingTime));
                 }
-                startTimerTextView.setText(countdown.toString());
             }
         });
-
         mViewModel.getQuestions().observe(this, gameQuestionObserver);
-
         mViewModel.getCurrentQuestion().observe(this, new Observer<Question>() {
             @Override
             public void onChanged(Question question) {
@@ -128,37 +129,48 @@ public class BasicGameActivity extends AppCompatActivity {
                 enableButtons();
             }
         });
-
         mViewModel.getLivesCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer remainingLives) {
                 livesTextView.setText(remainingLives.toString() + " Lives");
             }
         });
-
         mViewModel.getQuestionNumber().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer currentQuestionNumber) {
                 questionCountTextView.setText(currentQuestionNumber.toString() + "/10");
             }
         });
-
-        mViewModel.getRemainingTime().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer remainingTime) {
-                gameTimerTextView.setText(String.format("%d:%02d", 00, remainingTime));
-            }
-        });
-
-        mViewModel.getIsGameOVer().observe(this, new Observer<Boolean>() {
+        mViewModel.getIsGameOver().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isGameOver) {
-                if(isGameOver){
+                if (isGameOver) {
+                    correctCountTextView.setText(String.format("Correct: %d", mViewModel.getPlayerScore() * 10) + "%");
                     showGameOver();
                 }
             }
         });
+        mViewModel.getIsNewHighscore().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isHighScore) {
+                if(isHighScore) {
+                    highScoreView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
+        View.OnClickListener clickedAnswerListener = v -> {
+            Button b = (Button) v;
+            disableButtons();
+            boolean isCorrect = mViewModel.checkAnswer(b.getText().toString());
+            if (isCorrect) {
+                highlightRightWrong(b);
+            } else {
+                String correctMovie = mViewModel.getCorrectMovie();
+                Button correctMovieButton = findCorrectButton(correctMovie);
+                highlightRightWrong(correctMovieButton);
+            }
+        };
         answerOne.setOnClickListener(clickedAnswerListener);
         answerTwo.setOnClickListener(clickedAnswerListener);
         answerThree.setOnClickListener(clickedAnswerListener);
@@ -169,121 +181,127 @@ public class BasicGameActivity extends AppCompatActivity {
                 SaveUserHighScore();
             }
         });
-
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 replay();
             }
         });
+        mainMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-        mViewModel.startNewGame();
+        mViewModel.newGame();
     }
 
     private void SaveUserHighScore() {
         String username = highScoreUsernameEditText.getText().toString().trim();
-        if(username.isEmpty()){
+        if (username.isEmpty()) {
             Toast.makeText(this, "Please enter name for high score", Toast.LENGTH_SHORT).show();
             return;
-        }else{
-            mDisposable.add(mViewModel.saveUserHighScore(username)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() ->
-                                    Toast.makeText(BasicGameActivity.this, "Inserted", Toast.LENGTH_SHORT).show(),
-                            throwable -> Log.e("HIGH SCORE ACTIVITY", "Unable to retrieve high scores", throwable)
-                    ));
+        } else {
+//            mDisposable.add(mViewModel.saveUserHighScore(username)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(() ->
+//                                    Toast.makeText(BasicGameActivity.this, "Inserted", Toast.LENGTH_SHORT).show(),
+//                            throwable -> Log.e("HIGH SCORE ACTIVITY", "Unable to retrieve high scores", throwable)
+//                    ));
+            mViewModel.saveUserHighScore(username);
+            highScoreView.setVisibility(View.GONE);
         }
     }
 
     private Button findCorrectButton(String correctMovie) {
-        if(answerOne.getText().equals(correctMovie)){
+        if (answerOne.getText().equals(correctMovie)) {
             return answerOne;
         }
 
-        if(answerTwo.getText().equals(correctMovie)){
+        if (answerTwo.getText().equals(correctMovie)) {
             return answerTwo;
         }
 
-        if(answerThree.getText().equals(correctMovie)){
+        if (answerThree.getText().equals(correctMovie)) {
             return answerThree;
         }
 
         return answerFour;
     }
 
-    private void disableButtons(){
+    private void disableButtons() {
         answerOne.setEnabled(false);
         answerTwo.setEnabled(false);
         answerThree.setEnabled(false);
         answerFour.setEnabled(false);
     }
 
-    private void enableButtons(){
+    private void enableButtons() {
         answerOne.setEnabled(true);
         answerTwo.setEnabled(true);
         answerThree.setEnabled(true);
         answerFour.setEnabled(true);
     }
 
-    private void showStartView(){
+    private void showStartView() {
         startTimerTextView.setText("3");
         startTextTextView.setText("Get Ready...");
         gameView.setVisibility(View.GONE);
         startView.setVisibility(View.VISIBLE);
     }
 
-    private void showGameOver(){
+    private void showGameOver() {
         gameView.setVisibility(View.GONE);
         startView.setVisibility(View.GONE);
         gameOverView.setVisibility(View.VISIBLE);
     }
 
-    private void showGameView(){
+    private void showGameView() {
         startView.setVisibility(View.GONE);
         gameOverView.setVisibility(View.GONE);
         gameView.setVisibility(View.VISIBLE);
     }
 
-    private void highlightRightWrong(Button right){
-        if(answerOne == right){
+    private void highlightRightWrong(Button right) {
+        if (answerOne == right) {
             answerOne.setBackgroundColor(Color.GREEN);
-        }else{
+        } else {
             answerOne.setBackgroundColor(Color.RED);
         }
 
-        if(answerTwo == right){
+        if (answerTwo == right) {
             answerTwo.setBackgroundColor(Color.GREEN);
-        }else{
+        } else {
             answerTwo.setBackgroundColor(Color.RED);
         }
 
-        if(answerThree == right){
+        if (answerThree == right) {
             answerThree.setBackgroundColor(Color.GREEN);
-        }else{
+        } else {
             answerThree.setBackgroundColor(Color.RED);
         }
 
-        if(answerFour == right){
+        if (answerFour == right) {
             answerFour.setBackgroundColor(Color.GREEN);
-        }else{
+        } else {
             answerFour.setBackgroundColor(Color.RED);
         }
     }
 
-    private void resetQuestionColor(){
+    private void resetQuestionColor() {
         answerOne.setBackgroundColor(Color.WHITE);
         answerTwo.setBackgroundColor(Color.WHITE);
         answerThree.setBackgroundColor(Color.WHITE);
         answerFour.setBackgroundColor(Color.WHITE);
     }
 
-    private void replay(){
+    private void replay() {
         showStartView();
         mViewModel.replay();
         mViewModel.getQuestions().observe(this, gameQuestionObserver);
-        mViewModel.startNewGame();
     }
 
     @Override
