@@ -1,31 +1,22 @@
 package com.johade.quotem.Views_Activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.johade.quotem.ViewModels.ViewModelFactory;
 import com.johade.quotem.Models.Question;
 import com.johade.quotem.R;
 import com.johade.quotem.ViewModels.BasicGameViewModel;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
-public class BasicGameActivity extends AppCompatActivity {
+public abstract class BasicGameActivity extends BaseGameActivity {
     private BasicGameViewModel mViewModel;
 
     private TextView questionView;
@@ -47,7 +38,6 @@ public class BasicGameActivity extends AppCompatActivity {
     private View gameView;
     private View gameOverView;
     private View highScoreView;
-    private Observer gameQuestionObserver;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
@@ -55,48 +45,14 @@ public class BasicGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_game);
 
-        startTimerTextView = findViewById(R.id.startTimer);
-        startTextTextView = findViewById(R.id.startText);
-        questionCountTextView = findViewById(R.id.questionCount);
-        gameTimerTextView = findViewById(R.id.timerText);
-        livesTextView = findViewById(R.id.lives);
-        correctCountTextView = findViewById(R.id.correctCount);
-        saveHighScore = findViewById(R.id.saveScoreButton);
-        mainMenuButton = findViewById(R.id.mainMenu);
-        highScoreUsernameEditText = findViewById(R.id.highscoreUsernameEditText);
-        playAgain = findViewById(R.id.playAgain);
-        answerOne = findViewById(R.id.answerOne);
-        answerTwo = findViewById(R.id.answerTwo);
-        answerThree = findViewById(R.id.answerThree);
-        answerFour = findViewById(R.id.answerFour);
-        questionView = findViewById(R.id.questionView);
-        startView = findViewById(R.id.startView);
-        gameView = findViewById(R.id.game_view);
-        gameOverView = findViewById(R.id.gameOverView);
-        highScoreView = findViewById(R.id.highScoreView);
-
         ViewModelFactory myViewModelFactory = new ViewModelFactory(getApplicationContext());
         mViewModel = ViewModelProviders.of(this, myViewModelFactory).get(BasicGameViewModel.class);
 
-        gameQuestionObserver = new Observer<List<Question>>() {
-            @Override
-            public void onChanged(List<Question> response) {
-                mViewModel.gameIsReady();
-            }
-        };
         mViewModel.getIsSetupComplete().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean gameReady) {
-                if(gameReady) {
+                if(gameReady && !mViewModel.getGameInProgress()) {
                     mViewModel.startGame();
-                }
-            }
-        });
-        mViewModel.getGameInProgress().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean gameInProgress) {
-                if (gameInProgress) {
-                    showGameView();
                 }
             }
         });
@@ -111,11 +67,21 @@ public class BasicGameActivity extends AppCompatActivity {
                     }
                     startTimerTextView.setText(startTimer + "");
                 } else {
+                    if(!gameView.isShown()){
+                        showGameView();
+                    }
                     gameTimerTextView.setText(String.format("%d:%02d", 00, remainingTime));
                 }
             }
         });
-        mViewModel.getQuestions().observe(this, gameQuestionObserver);
+
+        mViewModel.getQuestions().observe(this, new Observer<List<Question>>() {
+            @Override
+            public void onChanged(List<Question> response) {
+                mViewModel.gameIsReady();
+            }
+        });
+
         mViewModel.getCurrentQuestion().observe(this, new Observer<Question>() {
             @Override
             public void onChanged(Question question) {
@@ -171,6 +137,7 @@ public class BasicGameActivity extends AppCompatActivity {
                 highlightRightWrong(correctMovieButton);
             }
         };
+
         answerOne.setOnClickListener(clickedAnswerListener);
         answerTwo.setOnClickListener(clickedAnswerListener);
         answerThree.setOnClickListener(clickedAnswerListener);
@@ -194,7 +161,9 @@ public class BasicGameActivity extends AppCompatActivity {
             }
         });
 
-        mViewModel.newGame();
+        if(!mViewModel.getGameInProgress()) {
+            mViewModel.newGame();
+        }
     }
 
     private void SaveUserHighScore() {
@@ -232,76 +201,14 @@ public class BasicGameActivity extends AppCompatActivity {
         return answerFour;
     }
 
-    private void disableButtons() {
-        answerOne.setEnabled(false);
-        answerTwo.setEnabled(false);
-        answerThree.setEnabled(false);
-        answerFour.setEnabled(false);
-    }
-
-    private void enableButtons() {
-        answerOne.setEnabled(true);
-        answerTwo.setEnabled(true);
-        answerThree.setEnabled(true);
-        answerFour.setEnabled(true);
-    }
-
-    private void showStartView() {
-        startTimerTextView.setText("3");
-        startTextTextView.setText("Get Ready...");
-        gameView.setVisibility(View.GONE);
-        startView.setVisibility(View.VISIBLE);
-    }
-
-    private void showGameOver() {
-        gameView.setVisibility(View.GONE);
-        startView.setVisibility(View.GONE);
-        gameOverView.setVisibility(View.VISIBLE);
-    }
-
-    private void showGameView() {
-        startView.setVisibility(View.GONE);
-        gameOverView.setVisibility(View.GONE);
-        gameView.setVisibility(View.VISIBLE);
-    }
-
-    private void highlightRightWrong(Button right) {
-        if (answerOne == right) {
-            answerOne.setBackgroundColor(Color.GREEN);
-        } else {
-            answerOne.setBackgroundColor(Color.RED);
-        }
-
-        if (answerTwo == right) {
-            answerTwo.setBackgroundColor(Color.GREEN);
-        } else {
-            answerTwo.setBackgroundColor(Color.RED);
-        }
-
-        if (answerThree == right) {
-            answerThree.setBackgroundColor(Color.GREEN);
-        } else {
-            answerThree.setBackgroundColor(Color.RED);
-        }
-
-        if (answerFour == right) {
-            answerFour.setBackgroundColor(Color.GREEN);
-        } else {
-            answerFour.setBackgroundColor(Color.RED);
-        }
-    }
-
-    private void resetQuestionColor() {
-        answerOne.setBackgroundColor(Color.WHITE);
-        answerTwo.setBackgroundColor(Color.WHITE);
-        answerThree.setBackgroundColor(Color.WHITE);
-        answerFour.setBackgroundColor(Color.WHITE);
-    }
-
     private void replay() {
         showStartView();
         mViewModel.replay();
-        mViewModel.getQuestions().observe(this, gameQuestionObserver);
+        mViewModel.getQuestions().observe(this, new Observer<List<Question>>() {
+            @Override
+            public void onChanged(List<Question> response) {
+                mViewModel.gameIsReady();
+            }});
     }
 
     @Override

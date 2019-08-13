@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import com.johade.quotem.Models.Highscore;
+import android.widget.Toast;
+
 import com.johade.quotem.R;
-import com.johade.quotem.Repository.QuoteMRepository;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         playGameButton = findViewById(R.id.playGame);
         highScoresButton = findViewById(R.id.highScores);
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewSettings();
+                viewEndless();
             }
         });
     }
@@ -50,9 +52,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(openActivity);
     }
 
+    private void viewEndless(){
+        Intent openActivity = new Intent(this, EndlessGameActivity.class);
+        startActivity(openActivity);
+    }
+
     private void viewSettings() {
-        QuoteMRepository repository = new QuoteMRepository(getApplicationContext());
-        Highscore temp = new Highscore("Ubar", 3);
+//        QuoteMRepository repository = new QuoteMRepository(getApplicationContext());
+//        Highscore temp = new Highscore("Ubar", 3);
 
 //        mDisposable.add(repository.insertHighscore(temp)
 //                .subscribeOn(Schedulers.io())
@@ -62,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 //                                Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_SHORT).show(),
 //                        throwable -> Log.e("HIGH SCORE ACTIVITY", "Unable to retrieve high scores", throwable)
 //                ));
+        Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
 
     }
 

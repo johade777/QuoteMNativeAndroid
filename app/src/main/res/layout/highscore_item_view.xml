@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/background_color"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/userName"
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/scoreDate"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/highscoreTextColor"
         android:text="UbarJohade" />
 
     <TextView
@@ -19,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/highscoreTextColor"
         android:text="Date: 7/29/2019" />
 
     <TextView
@@ -27,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/highscoreTextColor"
         android:text="Score: 10" />
 
 </RelativeLayout>

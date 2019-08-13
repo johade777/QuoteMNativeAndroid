@@ -1,53 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="10sp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
+
     <TextView
+        android:id="@+id/questionView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_corner"
+        android:gravity="center_horizontal|center_vertical"
         android:minHeight="85dp"
         android:text="Question"
-        android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/black"
-        android:background="@drawable/rounded_corner"
-        android:id="@+id/questionView"
-        android:gravity="center_horizontal|center_vertical"
-        android:padding="5dp"
-        android:layout_marginBottom="5dp" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/answerOne"
         android:layout_width="match_parent"
         android:layout_height="65dip"
-        android:layout_weight= "1"
-        android:text="Answer 1"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_corner"
-        android:layout_margin="5dp" />
+        android:text="Answer 1"
+        app:layout_constraintTop_toBottomOf="@+id/questionView" />
+
     <Button
         android:id="@+id/answerTwo"
         android:layout_width="match_parent"
         android:layout_height="65dip"
-        android:layout_weight= "1"
-        android:text="Answer 2"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_corner"
-        android:layout_margin="5dp"/>
+        android:text="Answer 2"
+        app:layout_constraintTop_toBottomOf="@+id/answerOne" />
+
     <Button
         android:id="@+id/answerThree"
         android:layout_width="match_parent"
         android:layout_height="65dip"
-        android:layout_weight= "1"
-        android:text="Answer 3"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_corner"
-        android:layout_margin="5dp"/>
+        android:text="Answer 3"
+        app:layout_constraintTop_toBottomOf="@+id/answerTwo"
+        tools:layout_editor_absoluteX="8dp" />
+
     <Button
         android:id="@+id/answerFour"
         android:layout_width="match_parent"
         android:layout_height="65dip"
-        android:layout_weight= "1"
-        android:text="Answer 4"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_corner"
-        android:layout_margin="5dp" />
-</LinearLayout>
+        android:text="Answer 4"
+        app:layout_constraintTop_toBottomOf="@+id/answerThree" />
+
+    <ProgressBar
+        android:id="@+id/retrievingProgress"
+        style="?android:attr/progressBarStyle"
+        android:visibility="invisible"
+        android:indeterminate="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import com.johade.quotem.Models.QuestionResponse;
 import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +50,7 @@ public class QuoteMRepository {
     public LiveData<List<Question>> getQuestions(){
         return questionData;
     }
+
     public Flowable<List<Highscore>> getHighScores(){
         return highScoreDao.getAllHighScores();
     }
@@ -80,6 +82,10 @@ public class QuoteMRepository {
                 System.out.println("Failure");
             }
         });
+    }
+
+    public Observable retrieveQuestions(){
+        return apiService.retrieveQuestions();
     }
 
     private static class InsertScore extends AsyncTask<Highscore, Void, Void>{

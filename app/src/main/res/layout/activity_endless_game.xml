@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background_color">
+
     <include
         android:id="@+id/toobar"
-        layout="@layout/toolbar_basic_game" />
+        layout="@layout/toolbar_endless_game" />
     <include
         android:id="@+id/startView"
         layout="@layout/content_starting" />
@@ -19,4 +20,5 @@
         android:id="@+id/gameOverView"
         layout="@layout/content_game_over"
         android:visibility="invisible" />
+
 </LinearLayout>
