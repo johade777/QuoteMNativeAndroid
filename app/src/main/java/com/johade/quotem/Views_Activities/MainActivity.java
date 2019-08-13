@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openGame() {
-        Intent openActivity = new Intent(this, BasicGameActivity.class);
+        Intent openActivity = new Intent(this, TimedGameActivity.class);
         startActivity(openActivity);
     }
 

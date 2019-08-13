@@ -15,10 +15,5 @@ public class EndlessGameViewModel extends BaseGameViewModel {
             retrieveQuestions();
         }
     }
-
-    @Override
-    public void newGame() {
-        startTimer.start();
-    }
 }
 

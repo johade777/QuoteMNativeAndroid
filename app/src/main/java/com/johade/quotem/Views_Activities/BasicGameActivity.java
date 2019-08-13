@@ -101,12 +101,14 @@ public abstract class BasicGameActivity extends BaseGameActivity {
                 livesTextView.setText(remainingLives.toString() + " Lives");
             }
         });
+
         mViewModel.getQuestionNumber().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer currentQuestionNumber) {
                 questionCountTextView.setText(currentQuestionNumber.toString() + "/10");
             }
         });
+
         mViewModel.getIsGameOver().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isGameOver) {
@@ -116,6 +118,7 @@ public abstract class BasicGameActivity extends BaseGameActivity {
                 }
             }
         });
+
         mViewModel.getIsNewHighscore().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isHighScore) {

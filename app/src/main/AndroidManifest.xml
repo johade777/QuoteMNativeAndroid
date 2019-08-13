@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Views_Activities.BaseGameActivity"></activity>
+        <activity android:name=".Views_Activities.TimedGameActivity"></activity>
+        <activity android:name=".Views_Activities.BaseGameActivity" />
         <activity
             android:name=".Views_Activities.EndlessGameActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Views_Activities.HighScoresActivity"
             android:label="@string/title_activity_high_scores"
@@ -31,7 +32,7 @@
         </activity>
         <activity
             android:name=".Views_Activities.BasicGameActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

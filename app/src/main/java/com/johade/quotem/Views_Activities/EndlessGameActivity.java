@@ -60,7 +60,9 @@ public class EndlessGameActivity extends BaseGameActivity {
         mViewModel.getGameOver().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean gameOver) {
-                showGameOver();
+                if(gameOver) {
+                    showGameOver();
+                }
             }
         });
     }
@@ -90,7 +92,7 @@ public class EndlessGameActivity extends BaseGameActivity {
     }
 
     @Override
-    protected void startNewGame() {
-        mViewModel.newGame();
+    protected void displayScore() {
+        correctCountTextView.setText(String.format("Correct: %d", mViewModel.getPlayerScore().getValue()) + "");
     }
 }
