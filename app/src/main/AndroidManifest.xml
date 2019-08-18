@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Views_Activities.TimedGameActivity"></activity>
+        <activity android:name=".Views_Activities.ActivitySelectGame"></activity>
+        <activity android:name=".Views_Activities.TimedGameActivity" />
         <activity android:name=".Views_Activities.BaseGameActivity" />
         <activity
             android:name=".Views_Activities.EndlessGameActivity"

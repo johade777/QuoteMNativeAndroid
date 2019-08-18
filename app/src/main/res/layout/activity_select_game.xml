@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:context=".Views_Activities.ActivitySelectGame">
+
+    <Button
+        android:id="@+id/timedGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_corner"
+        android:minHeight="65dp"
+        android:text="Timed" />
+
+    <Button
+        android:id="@+id/endlessGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_corner"
+        android:minHeight="65dp"
+        android:text="Endless" />
+
+    <Button
+        android:id="@+id/verseGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_corner"
+        android:minHeight="65dp"
+        android:text="Verse" />
+
+    <Button
+        android:id="@+id/userGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_corner"
+        android:minHeight="65dp"
+        android:text="USer" />
+</LinearLayout>

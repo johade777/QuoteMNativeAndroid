@@ -27,33 +27,16 @@ public class MainActivity extends AppCompatActivity {
         playGameButton = findViewById(R.id.playGame);
         highScoresButton = findViewById(R.id.highScores);
         settingsButton = findViewById(R.id.settings);
-        playGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGame();
-            }
+        playGameButton.setOnClickListener(v -> {
+            Intent openActivity = new Intent(MainActivity.this, ActivitySelectGame.class);
+            startActivity(openActivity);
         });
-        highScoresButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewHighScores();
-            }
-        });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewEndless();
-            }
-        });
+        highScoresButton.setOnClickListener(v -> viewHighScores());
+        settingsButton.setOnClickListener(v -> viewSettings());
     }
 
     private void viewHighScores() {
         Intent openActivity = new Intent(this, HighScoresActivity.class);
-        startActivity(openActivity);
-    }
-
-    private void viewEndless(){
-        Intent openActivity = new Intent(this, EndlessGameActivity.class);
         startActivity(openActivity);
     }
 
@@ -71,11 +54,6 @@ public class MainActivity extends AppCompatActivity {
 //                ));
         Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
 
-    }
-
-    private void openGame() {
-        Intent openActivity = new Intent(this, TimedGameActivity.class);
-        startActivity(openActivity);
     }
 
     @Override
