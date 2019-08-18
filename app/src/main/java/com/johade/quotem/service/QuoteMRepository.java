@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.johade.quotem.model.GetQuizzesResponse;
 import com.johade.quotem.model.LoginResponse;
-import com.johade.quotem.model.User;
 import com.johade.quotem.persistence.AppDatabase;
 import com.johade.quotem.persistence.HighScoreDao;
 import com.johade.quotem.model.Highscore;
@@ -63,7 +63,7 @@ public class QuoteMRepository {
         return userService.login(username, password);
     }
 
-    public Call<User> getUserQizzes(String token){
+    public Call<GetQuizzesResponse> getUserQizzes(String token){
         return userService.getUserQuizzes(token);
     }
 

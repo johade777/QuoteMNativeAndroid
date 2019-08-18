@@ -14,7 +14,7 @@ public class LoginResponse {
     }
 
     public String getAuthToken() {
-        return authToken;
+        return "Bearer: " + authToken;
     }
 
     public void setMessage(String message) {

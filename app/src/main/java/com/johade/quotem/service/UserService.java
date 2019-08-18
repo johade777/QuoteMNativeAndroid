@@ -1,7 +1,7 @@
 package com.johade.quotem.service;
 
+import com.johade.quotem.model.GetQuizzesResponse;
 import com.johade.quotem.model.LoginResponse;
-import com.johade.quotem.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,5 +13,5 @@ public interface UserService {
     Call<LoginResponse> login(@Header("username") String username, @Header("password") String password);
 
     @GET("getUserQuizzes")
-    Call<User> getUserQuizzes(@Header("username") String authToken);
+    Call<GetQuizzesResponse> getUserQuizzes(@Header("Authorization") String authToken);
 }
