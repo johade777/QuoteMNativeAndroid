@@ -7,9 +7,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface QuoteMService {
-    @GET("GetQuestions")
+    @GET("getQuestions")
     Call<QuestionResponse> getQuestions();
 
-    @GET("GetQuestions")
+    @GET("getQuestions")
     Observable<QuestionResponse> retrieveQuestions();
 }

@@ -133,7 +133,7 @@ public abstract class BaseGameViewModel extends ViewModel {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        System.out.println("Test");
                     }
 
                     @Override

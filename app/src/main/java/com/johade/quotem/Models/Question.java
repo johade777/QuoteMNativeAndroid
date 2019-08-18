@@ -9,19 +9,19 @@ public class Question {
     @SerializedName("id")
     public int id;
 
-    @SerializedName("question")
+    @SerializedName("Question")
     public String question;
 
-    @SerializedName("answer")
+    @SerializedName("Answer")
     public String answer;
 
-    @SerializedName("wrong1")
+    @SerializedName("Wrong1")
     public String wrong1;
 
-    @SerializedName("wrong2")
+    @SerializedName("Wrong2")
     public String wrong2;
 
-    @SerializedName("wrong3")
+    @SerializedName("Wrong3")
     public String wrong3;
 
     public ArrayList<String> shuffle(){
