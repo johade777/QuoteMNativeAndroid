@@ -1,4 +1,4 @@
-package com.johade.quotem.Models;
+package com.johade.quotem.model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -8,18 +8,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.johade.quotem.Models.Question;
-import com.johade.quotem.Models.QuestionResponse;
-import com.johade.quotem.Repository.QuoteMRepository;
+import com.johade.quotem.model.Question;
+import com.johade.quotem.model.QuestionResponse;
+import com.johade.quotem.service.QuoteMRepository;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 

@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import androidx.lifecycle.Observer;
 
-import com.johade.quotem.Models.Question;
+import com.johade.quotem.model.Question;
 import com.johade.quotem.R;
 import com.johade.quotem.ViewModels.TimedGameViewModel;
 

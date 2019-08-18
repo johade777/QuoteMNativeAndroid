@@ -1,18 +1,15 @@
-package com.johade.quotem.Persistance;
+package com.johade.quotem.persistence;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
-import com.johade.quotem.Models.Highscore;
+import com.johade.quotem.model.Highscore;
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 
 @Dao
 public interface HighScoreDao {

@@ -3,7 +3,6 @@ package com.johade.quotem.Views_Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
@@ -11,8 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.johade.quotem.Models.Question;
-import com.johade.quotem.R;
+import com.johade.quotem.model.Question;
 import com.johade.quotem.ViewModels.BaseGameViewModel;
 
 import java.util.ArrayList;

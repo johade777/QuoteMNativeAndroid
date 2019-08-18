@@ -1,4 +1,4 @@
-package com.johade.quotem.Repository;
+package com.johade.quotem.service;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

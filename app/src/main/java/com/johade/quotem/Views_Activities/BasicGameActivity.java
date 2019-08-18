@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.johade.quotem.ViewModels.ViewModelFactory;
-import com.johade.quotem.Models.Question;
+import com.johade.quotem.model.Question;
 import com.johade.quotem.R;
 import com.johade.quotem.ViewModels.BasicGameViewModel;
 import androidx.lifecycle.Observer;

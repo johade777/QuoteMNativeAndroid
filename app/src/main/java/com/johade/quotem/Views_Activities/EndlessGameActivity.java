@@ -3,7 +3,7 @@ package com.johade.quotem.Views_Activities;
 import android.os.Bundle;
 import androidx.lifecycle.Observer;
 
-import com.johade.quotem.Models.Question;
+import com.johade.quotem.model.Question;
 import com.johade.quotem.ViewModels.EndlessGameViewModel;
 import com.johade.quotem.R;
 

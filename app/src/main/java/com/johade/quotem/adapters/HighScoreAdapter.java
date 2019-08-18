@@ -1,4 +1,4 @@
-package com.johade.quotem.Adapters;
+package com.johade.quotem.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.johade.quotem.Models.Highscore;
+import com.johade.quotem.model.Highscore;
 import com.johade.quotem.R;
 import java.text.Format;
 import java.text.SimpleDateFormat;

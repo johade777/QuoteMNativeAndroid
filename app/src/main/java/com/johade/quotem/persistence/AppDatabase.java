@@ -1,4 +1,4 @@
-package com.johade.quotem.Persistance;
+package com.johade.quotem.persistence;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import com.johade.quotem.Models.Highscore;
+import com.johade.quotem.model.Highscore;
 
 @androidx.room.Database(entities = {Highscore.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})

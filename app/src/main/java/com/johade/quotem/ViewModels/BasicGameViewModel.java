@@ -4,12 +4,10 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.johade.quotem.Models.Highscore;
-import com.johade.quotem.Models.Question;
-import com.johade.quotem.Repository.QuoteMRepository;
-import com.johade.quotem.Views_Activities.BasicGameActivity;
+import com.johade.quotem.model.Highscore;
+import com.johade.quotem.model.Question;
+import com.johade.quotem.service.QuoteMRepository;
 
 import java.util.List;
 
@@ -17,7 +15,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -135,7 +132,7 @@ public class BasicGameViewModel extends ViewModel {
 
     private void getNewQuotes() {
         gameSetupComplete.setValue(false);
-        repository.getQuotes();
+        //repository.getQuotes();
     }
 
     public void newGame() {

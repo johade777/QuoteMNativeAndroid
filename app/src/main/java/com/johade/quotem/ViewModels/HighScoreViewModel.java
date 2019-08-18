@@ -3,8 +3,8 @@ package com.johade.quotem.ViewModels;
 import android.content.Context;
 import androidx.lifecycle.ViewModel;
 
-import com.johade.quotem.Models.Highscore;
-import com.johade.quotem.Repository.QuoteMRepository;
+import com.johade.quotem.model.Highscore;
+import com.johade.quotem.service.QuoteMRepository;
 import java.util.List;
 import io.reactivex.Flowable;
 

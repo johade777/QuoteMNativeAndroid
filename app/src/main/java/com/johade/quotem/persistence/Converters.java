@@ -1,4 +1,4 @@
-package com.johade.quotem.Persistance;
+package com.johade.quotem.persistence;
 
 import androidx.room.TypeConverter;
 
