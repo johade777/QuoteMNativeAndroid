@@ -56,6 +56,13 @@
                 android:background="@drawable/rounded_corner"
                 android:layout_marginRight="3dp"
                 android:text="My Quizzes" />
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner"
+                android:layout_marginLeft="3dp"
+                android:text="Logout" />
         </TableRow>
 
     </TableLayout>

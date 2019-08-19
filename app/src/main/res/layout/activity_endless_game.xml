@@ -13,7 +13,7 @@
         android:id="@+id/startView"
         layout="@layout/content_starting" />
     <include
-        layout="@layout/question_view"
+        layout="@layout/content_question_view"
         android:id="@+id/game_view"
         android:visibility="invisible" />
     <include

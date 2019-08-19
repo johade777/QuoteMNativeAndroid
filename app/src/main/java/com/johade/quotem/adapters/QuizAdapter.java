@@ -16,12 +16,17 @@ import java.util.List;
 
 public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder> {
     private List<Quiz> mQuizzes = new ArrayList<>();
+    private OnRecyclerItemClickListener onItemClick;
+
+    public QuizAdapter(OnRecyclerItemClickListener itemClickListener){
+        this.onItemClick = itemClickListener;
+    }
 
     @NonNull
     @Override
     public QuizViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_quiz, parent, false);
-        return new QuizViewHolder(itemView);
+        return new QuizViewHolder(itemView, onItemClick);
     }
 
     @Override
@@ -41,18 +46,26 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         notifyDataSetChanged();
     }
 
-    public class QuizViewHolder extends RecyclerView.ViewHolder{
+    public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView quizName;
         private TextView quizId;
         private TextView createdDate;
         private TextView questionCount;
+        private OnRecyclerItemClickListener onClickListener;
 
-        public QuizViewHolder(@NonNull View itemView) {
+        public QuizViewHolder(@NonNull View itemView, OnRecyclerItemClickListener onClickListener) {
             super(itemView);
             quizName = itemView.findViewById(R.id.quizName);
             quizId = itemView.findViewById(R.id.quizId);
             createdDate = itemView.findViewById(R.id.quizDate);
             questionCount = itemView.findViewById(R.id.questionNumber);
+            this.onClickListener = onClickListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onClickListener.onItemClick(getAdapterPosition());
         }
     }
 }
