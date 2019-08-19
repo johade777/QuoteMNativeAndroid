@@ -20,7 +20,7 @@ public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.High
     @NonNull
     @Override
     public HighScoreHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.highscore_item_view, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_highscore, parent, false);
         return new HighScoreHolder(itemView);
     }
 

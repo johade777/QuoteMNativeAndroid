@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitSingleton {
     private static String BASE_URL = "https://personal-web-mobile.herokuapp.com/mobile/";
+    private String token;
     private static Retrofit instance;
 
     public synchronized static Retrofit getRetrofitInstance() {
@@ -17,5 +18,13 @@ public class RetrofitSingleton {
                     .build();
         }
         return instance;
+    }
+
+    public void setToken(String token){
+        this.token = token;
+    }
+
+    public String getToken(){
+        return this.token;
     }
 }

@@ -11,9 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Views_Activities.ActivitySelectGame"></activity>
+        <activity android:name=".Views_Activities.QuizzesActivity"></activity>
+        <activity
+            android:name=".Views_Activities.LoginActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Views_Activities.ActivitySelectGame" />
         <activity android:name=".Views_Activities.TimedGameActivity" />
-        <activity android:name=".Views_Activities.BaseGameActivity" />
         <activity
             android:name=".Views_Activities.EndlessGameActivity"
             android:screenOrientation="portrait" />
@@ -22,18 +31,7 @@
             android:label="@string/title_activity_high_scores"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Views_Activities.MainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Views_Activities.BasicGameActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".Views_Activities.MainActivity" />
     </application>
 
 </manifest>

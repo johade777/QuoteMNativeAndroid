@@ -1,5 +1,6 @@
 package com.johade.quotem.service;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -27,6 +28,7 @@ public class QuoteMRepository {
     UserService userService;
     AppDatabase applicationDatabase;
     HighScoreDao highScoreDao;
+    SharedPreferences preferences;
     private CompositeDisposable mDisposable = new CompositeDisposable();
 
     public QuoteMRepository(Context applicationContext){
@@ -36,6 +38,7 @@ public class QuoteMRepository {
         userService = RetrofitSingleton.getRetrofitInstance().create(UserService.class);
         applicationDatabase = AppDatabase.getInstance(applicationContext);
         highScoreDao = applicationDatabase.highScoreDao();
+        preferences = applicationContext.getSharedPreferences("myPrefs",  Context.MODE_PRIVATE);
     }
 
     public void insertHighscore(Highscore score){
@@ -65,6 +68,14 @@ public class QuoteMRepository {
 
     public Call<GetQuizzesResponse> getUserQizzes(String token){
         return userService.getUserQuizzes(token);
+    }
+
+    public void setToken(String token){
+        preferences.edit().putString("token", token).commit();
+    }
+
+    public String getToken(){
+        return preferences.getString("token", "");
     }
 
     private static class InsertScore extends AsyncTask<Highscore, Void, Void>{

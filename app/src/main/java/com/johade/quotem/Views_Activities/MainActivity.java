@@ -43,26 +43,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void viewHighScores() {
+        Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
+
 //        Intent openActivity = new Intent(this, HighScoresActivity.class);
 //        startActivity(openActivity);
 
-        Call<GetQuizzesResponse> call = repository.getUserQizzes(token);
-        call.enqueue(new Callback<GetQuizzesResponse>() {
-            @Override
-            public void onResponse(Call<GetQuizzesResponse> call, Response<GetQuizzesResponse> response) {
-                if(response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "Token: " + response.body().getQuizzes().get(0).getQuiz_name(), Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetQuizzesResponse> call, Throwable t) {
-
-            }
-        });
+//        Call<GetQuizzesResponse> call = repository.getUserQizzes(repository.getToken());
+//        call.enqueue(new Callback<GetQuizzesResponse>() {
+//            @Override
+//            public void onResponse(Call<GetQuizzesResponse> call, Response<GetQuizzesResponse> response) {
+//                if(response.isSuccessful()) {
+//                    Toast.makeText(MainActivity.this, "Token: " + response.body().getQuizzes().get(0).getQuiz_name(), Toast.LENGTH_LONG).show();
+//                }
+//                else{
+//                    Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GetQuizzesResponse> call, Throwable t) {
+//
+//            }
+//        });
     }
 
     private void viewSettings() {
@@ -77,54 +79,8 @@ public class MainActivity extends AppCompatActivity {
 //                                Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_SHORT).show(),
 //                        throwable -> Log.e("HIGH SCORE ACTIVITY", "Unable to retrieve high scores", throwable)
 //                ));
-//        Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
 
-
-
-        Call<LoginResponse> call = repository.login("johade", "12345");
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if(response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "Token: " + response.body().getAuthToken(), Toast.LENGTH_LONG).show();
-                    token = response.body().getAuthToken();
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "Failed Login", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-
-            }
-        });
-
-//        .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<QuestionResponse>() {
-//
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(QuestionResponse questionResponse) {
-//                        setQuestions(questionResponse.questions);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        System.out.println("Test");
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        Handler handler = new Handler();
-//                        handler.postDelayed(() -> retrievingQuestions.setValue(false), 2000);
-//                    }
-//                });
     }
 
     @Override

@@ -11,5 +11,5 @@
         android:id="@+id/highScoreRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/highscore_item_view" />
+        tools:listitem="@layout/item_view_highscore" />
 </LinearLayout>
