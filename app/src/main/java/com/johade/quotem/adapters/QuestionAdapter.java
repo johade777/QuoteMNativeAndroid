@@ -50,6 +50,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         notifyDataSetChanged();
     }
 
+    public Question getQuestion(int postion){
+        return mQuestions.get(postion);
+    }
+
     public class QuestionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView questionText;
         private TextView answerText;

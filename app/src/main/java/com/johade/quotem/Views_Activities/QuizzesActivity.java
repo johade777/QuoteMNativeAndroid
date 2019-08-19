@@ -47,7 +47,7 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
     }
 
     private void getQuizzes(){
-        Call<GetQuizzesResponse> call = repository.getUserQizzes(repository.getToken());
+        Call<GetQuizzesResponse> call = repository.getUserQizzes();
         call.enqueue(new Callback<GetQuizzesResponse>() {
             @Override
             public void onResponse(Call<GetQuizzesResponse> call, Response<GetQuizzesResponse> response) {
@@ -68,15 +68,15 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
 
 
     private void createNewQuiz(){
-
+        Intent intent = new Intent(this, CreateQuizActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onItemClick(int itemPosition) {
         Intent intent = new Intent(this, QuestionsActivity.class);
         Quiz clickedQuiz = adapter.getQuiz(itemPosition);
-        intent.putExtra("Quiz_Id", clickedQuiz.getQuiz_id());
+        intent.putExtra("quiz_Id", clickedQuiz.getQuiz_id());
         startActivity(intent);
-        //Toast.makeText(this, "Position: " + itemPosition, Toast.LENGTH_SHORT).show();
     }
 }

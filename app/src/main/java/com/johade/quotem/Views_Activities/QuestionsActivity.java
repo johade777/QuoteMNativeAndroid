@@ -14,6 +14,7 @@ import com.johade.quotem.adapters.OnRecyclerItemClickListener;
 import com.johade.quotem.adapters.QuestionAdapter;
 import com.johade.quotem.adapters.QuizAdapter;
 import com.johade.quotem.model.GetQuizQuestionsResponse;
+import com.johade.quotem.model.Question;
 import com.johade.quotem.service.QuoteMRepository;
 
 import retrofit2.Call;
@@ -34,12 +35,11 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
 
         questionReclcyer = findViewById(R.id.questionRecyclerView);
         createQuestionButton = findViewById(R.id.createQuestionButton);
-        
         createQuestionButton.setOnClickListener(v -> createQuestion());
 
         repository = new QuoteMRepository(this);
         Intent intent = getIntent();
-        quiz_id = intent.getIntExtra("Quiz_Id", -1);
+        quiz_id = intent.getIntExtra("quiz_Id", -1);
         if(quiz_id < 0){
             Toast.makeText(this, "Invalid Quiz Id", Toast.LENGTH_LONG).show();
         }
@@ -54,7 +54,7 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
     }
 
     private void getQuestions(int quizId) {
-        Call<GetQuizQuestionsResponse> call = repository.getQuizQuestions(quizId, repository.getToken());
+        Call<GetQuizQuestionsResponse> call = repository.getQuizQuestions(quizId);
         call.enqueue(new Callback<GetQuizQuestionsResponse>() {
             @Override
             public void onResponse(Call<GetQuizQuestionsResponse> call, Response<GetQuizQuestionsResponse> response) {
@@ -74,10 +74,12 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
     }
 
     private void createQuestion() {
+        Intent intent = new Intent(this, CreateQuestionActivity.class);
+        intent.putExtra("quiz_Id", quiz_id);
+        startActivity(intent);
     }
 
     @Override
     public void onItemClick(int itemPosition) {
-        Toast.makeText(this, "Question Position: " + itemPosition, Toast.LENGTH_SHORT).show();
     }
 }

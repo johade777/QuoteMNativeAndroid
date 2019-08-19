@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.johade.quotem.model.GetQuizQuestionsResponse;
 import com.johade.quotem.model.GetQuizzesResponse;
+import com.johade.quotem.model.InsertQuestionResponse;
+import com.johade.quotem.model.InsertQuizResponse;
 import com.johade.quotem.model.LoginResponse;
 import com.johade.quotem.persistence.AppDatabase;
 import com.johade.quotem.persistence.HighScoreDao;
@@ -69,11 +71,19 @@ public class QuoteMRepository {
         return userService.login(username, password);
     }
 
-    public Call<GetQuizzesResponse> getUserQizzes(String token){
-        return userService.getUserQuizzes(token);
+    public Call<GetQuizzesResponse> getUserQizzes(){
+        return userService.getUserQuizzes(getToken());
     }
-    public Call<GetQuizQuestionsResponse> getQuizQuestions(int quizId, String token){
-        return quizSerivce.getUserQuizzes(quizId, token);
+    public Call<GetQuizQuestionsResponse> getQuizQuestions(int quizId){
+        return quizSerivce.getUserQuizzes(quizId, getToken());
+    }
+
+    public Call<InsertQuizResponse> insertQuiz(String quizName, String quizTime){
+        return quizSerivce.insertQuiz(quizName, quizTime, getToken());
+    }
+
+    public Call<InsertQuestionResponse> insertQuestion(int quiz_id, String question, String answer, String wrong1, String wrong2, String wrong3){
+        return questionService.insertQuestion(quiz_id, question, answer, wrong1, wrong2, wrong3, getToken());
     }
 
 
