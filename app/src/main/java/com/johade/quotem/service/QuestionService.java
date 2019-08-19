@@ -5,7 +5,7 @@ import com.johade.quotem.model.QuestionResponse;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 
-public interface QuoteMQuestionService {
+public interface QuestionService {
 //    @GET("getQuestions")
 //    Call<QuestionResponse> getQuestions();
 

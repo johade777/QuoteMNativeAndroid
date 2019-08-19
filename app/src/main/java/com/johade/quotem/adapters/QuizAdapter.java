@@ -46,6 +46,10 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         notifyDataSetChanged();
     }
 
+    public Quiz getQuiz(int postion){
+        return mQuizzes.get(postion);
+    }
+
     public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView quizName;
         private TextView quizId;

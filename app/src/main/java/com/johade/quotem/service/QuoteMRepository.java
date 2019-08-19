@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.johade.quotem.model.GetQuizQuestionsResponse;
 import com.johade.quotem.model.GetQuizzesResponse;
 import com.johade.quotem.model.LoginResponse;
 import com.johade.quotem.persistence.AppDatabase;
@@ -24,8 +25,9 @@ public class QuoteMRepository {
     private MutableLiveData<List<Question>> questionData;
 
     Context applicationContext;
-    QuoteMQuestionService questionService;
+    QuestionService questionService;
     UserService userService;
+    QuizService quizSerivce;
     AppDatabase applicationDatabase;
     HighScoreDao highScoreDao;
     SharedPreferences preferences;
@@ -34,8 +36,9 @@ public class QuoteMRepository {
     public QuoteMRepository(Context applicationContext){
         this.applicationContext = applicationContext;
         questionData = new MutableLiveData<>();
-        questionService = RetrofitSingleton.getRetrofitInstance().create(QuoteMQuestionService.class);
+        questionService = RetrofitSingleton.getRetrofitInstance().create(QuestionService.class);
         userService = RetrofitSingleton.getRetrofitInstance().create(UserService.class);
+        quizSerivce = RetrofitSingleton.getRetrofitInstance().create(QuizService.class);
         applicationDatabase = AppDatabase.getInstance(applicationContext);
         highScoreDao = applicationDatabase.highScoreDao();
         preferences = applicationContext.getSharedPreferences("myPrefs",  Context.MODE_PRIVATE);
@@ -69,6 +72,10 @@ public class QuoteMRepository {
     public Call<GetQuizzesResponse> getUserQizzes(String token){
         return userService.getUserQuizzes(token);
     }
+    public Call<GetQuizQuestionsResponse> getQuizQuestions(int quizId, String token){
+        return quizSerivce.getUserQuizzes(quizId, token);
+    }
+
 
     public void setToken(String token){
         preferences.edit().putString("token", token).commit();

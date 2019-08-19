@@ -7,7 +7,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/question"
+        android:id="@+id/questionItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -16,8 +16,8 @@
 
 
     <TextView
-        android:id="@+id/questionAnswer"
-        android:layout_below="@id/question"
+        android:id="@+id/answerItem"
+        android:layout_below="@id/questionItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

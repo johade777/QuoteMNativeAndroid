@@ -14,6 +14,7 @@ import com.johade.quotem.R;
 import com.johade.quotem.adapters.OnRecyclerItemClickListener;
 import com.johade.quotem.adapters.QuizAdapter;
 import com.johade.quotem.model.GetQuizzesResponse;
+import com.johade.quotem.model.Quiz;
 import com.johade.quotem.service.QuoteMRepository;
 
 import retrofit2.Call;
@@ -73,7 +74,8 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
     @Override
     public void onItemClick(int itemPosition) {
         Intent intent = new Intent(this, QuestionsActivity.class);
-        intent.putExtra("Quiz_Id", itemPosition);
+        Quiz clickedQuiz = adapter.getQuiz(itemPosition);
+        intent.putExtra("Quiz_Id", clickedQuiz.getQuiz_id());
         startActivity(intent);
         //Toast.makeText(this, "Position: " + itemPosition, Toast.LENGTH_SHORT).show();
     }

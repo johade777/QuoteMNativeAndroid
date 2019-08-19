@@ -13,7 +13,12 @@ import com.johade.quotem.R;
 import com.johade.quotem.adapters.OnRecyclerItemClickListener;
 import com.johade.quotem.adapters.QuestionAdapter;
 import com.johade.quotem.adapters.QuizAdapter;
+import com.johade.quotem.model.GetQuizQuestionsResponse;
 import com.johade.quotem.service.QuoteMRepository;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class QuestionsActivity extends AppCompatActivity implements OnRecyclerItemClickListener {
     private RecyclerView questionReclcyer;
@@ -35,7 +40,7 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
         repository = new QuoteMRepository(this);
         Intent intent = getIntent();
         quiz_id = intent.getIntExtra("Quiz_Id", -1);
-        if(quiz_id > 0){
+        if(quiz_id < 0){
             Toast.makeText(this, "Invalid Quiz Id", Toast.LENGTH_LONG).show();
         }
 
@@ -49,7 +54,23 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
     }
 
     private void getQuestions(int quizId) {
+        Call<GetQuizQuestionsResponse> call = repository.getQuizQuestions(quizId, repository.getToken());
+        call.enqueue(new Callback<GetQuizQuestionsResponse>() {
+            @Override
+            public void onResponse(Call<GetQuizQuestionsResponse> call, Response<GetQuizQuestionsResponse> response) {
+                if(response.isSuccessful()) {
+                    adapter.setmQuestions(response.body().getQuestions());
+                }
+                else{
+                    Toast.makeText(QuestionsActivity.this, "Failed To Retrieve Questions", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<GetQuizQuestionsResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void createQuestion() {

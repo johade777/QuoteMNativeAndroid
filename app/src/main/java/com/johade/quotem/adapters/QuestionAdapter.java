@@ -25,15 +25,19 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     @NonNull
     @Override
     public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_quiz, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_question, parent, false);
         return new QuestionViewHolder(itemView, onItemClick);
     }
 
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
         Question currentQuestion = mQuestions.get(position);
-        holder.questionText.setText(currentQuestion.question);
-        holder.answerText.setText(currentQuestion.answer);
+        if(currentQuestion == null){
+            System.out.println("Something Happened");
+        }else {
+            holder.questionText.setText(currentQuestion.question);
+            holder.answerText.setText(currentQuestion.answer);
+        }
     }
 
     @Override
@@ -53,8 +57,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
         public QuestionViewHolder(@NonNull View itemView, OnRecyclerItemClickListener onClickListener) {
             super(itemView);
-            questionText = itemView.findViewById(R.id.question);
-            answerText = itemView.findViewById(R.id.questionAnswer);
+            questionText = itemView.findViewById(R.id.questionItem);
+            answerText = itemView.findViewById(R.id.answerItem);
             this.onClickListener = onClickListener;
             itemView.setOnClickListener(this);
         }
