@@ -1,10 +1,10 @@
 package com.johade.quotem.model;
 
-public class UserQuiz {
+public class Quiz {
     private int quiz_id;
     private String quiz_name;
 
-    public UserQuiz(int quiz_id, String quiz_name){
+    public Quiz(int quiz_id, String quiz_name){
         this.quiz_id = quiz_id;
         this.quiz_name = quiz_name;
     }

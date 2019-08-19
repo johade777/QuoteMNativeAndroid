@@ -47,5 +47,16 @@
                 android:background="@drawable/rounded_corner"
                 android:text="Settings" />
         </TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
+            <Button
+                android:id="@+id/userQuizzesButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner"
+                android:layout_marginRight="3dp"
+                android:text="My Quizzes" />
+        </TableRow>
+
     </TableLayout>
 </RelativeLayout>

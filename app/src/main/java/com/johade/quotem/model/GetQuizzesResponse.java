@@ -4,9 +4,9 @@ import java.util.List;
 
 public class GetQuizzesResponse {
     private String message;
-    private List<UserQuiz> quizzes;
+    private List<Quiz> quizzes;
 
-    public GetQuizzesResponse(String message, List<UserQuiz> quizzes){
+    public GetQuizzesResponse(String message, List<Quiz> quizzes){
         this.message = message;
         this.quizzes = quizzes;
     }
@@ -15,7 +15,7 @@ public class GetQuizzesResponse {
         return message;
     }
 
-    public List<UserQuiz> getQuizzes() {
+    public List<Quiz> getQuizzes() {
         return quizzes;
     }
 
@@ -23,7 +23,7 @@ public class GetQuizzesResponse {
         this.message = message;
     }
 
-    public void setQuizzes(List<UserQuiz> quizzes) {
+    public void setQuizzes(List<Quiz> quizzes) {
         this.quizzes = quizzes;
     }
 }

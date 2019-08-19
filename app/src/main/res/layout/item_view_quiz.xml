@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/quizName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/quizId"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/highscoreTextColor"
+        android:text="Quiz Name: Place Holder" />
+
+    <TextView
+        android:id="@+id/quizId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/highscoreTextColor"
+        android:text="Quiz Id: 11" />
+
+    <TextView
+        android:id="@+id/quizDate"
+        android:layout_below="@id/quizName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/highscoreTextColor"
+        android:text="Created Date: 7/29/2019" />
+
+    <TextView
+        android:id="@+id/questionNumber"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/quizId"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/highscoreTextColor"
+        android:text="10 Questions" />
+
+</RelativeLayout>

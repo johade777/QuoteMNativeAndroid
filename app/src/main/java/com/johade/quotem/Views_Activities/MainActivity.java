@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button playGameButton;
     private Button highScoresButton;
     private Button settingsButton;
+    private Button userQuizzesButton;
     QuoteMRepository repository;
     private static String token;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
@@ -33,13 +34,20 @@ public class MainActivity extends AppCompatActivity {
         playGameButton = findViewById(R.id.playGame);
         highScoresButton = findViewById(R.id.highScores);
         settingsButton = findViewById(R.id.settings);
+        userQuizzesButton = findViewById(R.id.userQuizzesButton);
         playGameButton.setOnClickListener(v -> {
             Intent openActivity = new Intent(MainActivity.this, ActivitySelectGame.class);
             startActivity(openActivity);
         });
         highScoresButton.setOnClickListener(v -> viewHighScores());
         settingsButton.setOnClickListener(v -> viewSettings());
+        userQuizzesButton.setOnClickListener(v -> showUserQuizzes());
         repository = new QuoteMRepository(this);
+    }
+
+    private void showUserQuizzes(){
+        Intent openActivity = new Intent(this, QuizzesActivity.class);
+        startActivity(openActivity);
     }
 
     private void viewHighScores() {
