@@ -1,6 +1,7 @@
 package com.johade.quotem.Views_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,5 +79,10 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
         Quiz clickedQuiz = adapter.getQuiz(itemPosition);
         intent.putExtra("quiz_Id", clickedQuiz.getQuiz_id());
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemLongClick(int itemPostion) {
+        Toast.makeText(this, "Long Click: " + adapter.getQuiz(itemPostion).getQuiz_name(), Toast.LENGTH_SHORT).show();
     }
 }

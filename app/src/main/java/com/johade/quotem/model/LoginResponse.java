@@ -14,6 +14,9 @@ public class LoginResponse {
     }
 
     public String getAuthToken() {
+        if(authToken == null){
+            return null;
+        }
         return "Bearer: " + authToken;
     }
 

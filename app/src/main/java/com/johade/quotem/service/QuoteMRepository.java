@@ -86,13 +86,16 @@ public class QuoteMRepository {
         return questionService.insertQuestion(quiz_id, question, answer, wrong1, wrong2, wrong3, getToken());
     }
 
-
     public void setToken(String token){
         preferences.edit().putString("token", token).commit();
     }
 
     public String getToken(){
         return preferences.getString("token", "");
+    }
+
+    public void logout(){
+        preferences.edit().clear().commit();
     }
 
     private static class InsertScore extends AsyncTask<Highscore, Void, Void>{

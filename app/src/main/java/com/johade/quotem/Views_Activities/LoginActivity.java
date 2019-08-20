@@ -34,9 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
         repository = new QuoteMRepository(this);
-
         loginButton.setOnClickListener(view -> login());
-
         registerButton.setOnClickListener(view -> register());
 
         checkIfLoggedIn();
@@ -49,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if(response.isSuccessful()) {
+                if(response.isSuccessful() && response.body().getAuthToken() != null) {
                     Toast.makeText(LoginActivity.this, "Token: " + response.body().getAuthToken(), Toast.LENGTH_LONG).show();
                     repository.setToken(response.body().getAuthToken());
                     loggedIn();

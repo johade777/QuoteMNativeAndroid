@@ -1,6 +1,7 @@
 package com.johade.quotem.Views_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,5 +82,10 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
 
     @Override
     public void onItemClick(int itemPosition) {
+    }
+
+    @Override
+    public void onItemLongClick(int itemPostion) {
+        Toast.makeText(this, "Long Click: " + adapter.getQuestion(itemPostion).question, Toast.LENGTH_SHORT).show();
     }
 }

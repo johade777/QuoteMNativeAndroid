@@ -50,7 +50,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         return mQuizzes.get(postion);
     }
 
-    public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView quizName;
         private TextView quizId;
         private TextView createdDate;
@@ -65,11 +65,18 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             questionCount = itemView.findViewById(R.id.questionNumber);
             this.onClickListener = onClickListener;
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             onClickListener.onItemClick(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            onClickListener.onItemLongClick(getAdapterPosition());
+            return true;
         }
     }
 }

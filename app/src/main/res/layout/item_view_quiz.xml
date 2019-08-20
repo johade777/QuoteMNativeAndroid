@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_color"
-    android:orientation="vertical"
-    android:padding="10dp">
+    app:cardBackgroundColor="@android:color/background_light"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
 
-    <TextView
-        android:id="@+id/quizName"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/quizId"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/highscoreTextColor"
-        android:text="Quiz Name: Place Holder" />
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/quizId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/highscoreTextColor"
-        android:text="Quiz Id: 11" />
+        <TextView
+            android:id="@+id/quizName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/quizId"
+            android:text="Quiz Name: Place Holder"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <TextView
-        android:id="@+id/quizDate"
-        android:layout_below="@id/quizName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/highscoreTextColor"
-        android:text="Created Date: 7/29/2019" />
+        <TextView
+            android:id="@+id/quizId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Quiz Id: 11"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    <TextView
-        android:id="@+id/questionNumber"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/quizId"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/highscoreTextColor"
-        android:text="10 Questions" />
+        <TextView
+            android:id="@+id/quizDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quizName"
+            android:text="Created Date: 7/29/2019"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/questionNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quizId"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/quizDate"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="2dp"
+            android:text="10 Questions"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

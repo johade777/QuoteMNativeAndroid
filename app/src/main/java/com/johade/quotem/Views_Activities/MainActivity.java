@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout(){
-        //Call Logout api
+        repository.logout();
         this.finish();
     }
 
