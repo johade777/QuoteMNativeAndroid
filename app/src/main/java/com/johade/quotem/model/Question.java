@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Question {
-    @SerializedName("id")
+    @SerializedName("Id")
     public int id;
 
     @SerializedName("Question")

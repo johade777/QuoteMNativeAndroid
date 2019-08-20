@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.johade.quotem.model.DeleteQuestionResponse;
 import com.johade.quotem.model.GetQuizQuestionsResponse;
 import com.johade.quotem.model.GetQuizzesResponse;
 import com.johade.quotem.model.InsertQuestionResponse;
@@ -84,6 +85,10 @@ public class QuoteMRepository {
 
     public Call<InsertQuestionResponse> insertQuestion(int quiz_id, String question, String answer, String wrong1, String wrong2, String wrong3){
         return questionService.insertQuestion(quiz_id, question, answer, wrong1, wrong2, wrong3, getToken());
+    }
+
+    public Call<DeleteQuestionResponse> deleteQuestion(int question_id){
+        return questionService.deleteQuestion(question_id, getToken());
     }
 
     public void setToken(String token){

@@ -14,6 +14,7 @@ import com.johade.quotem.R;
 import com.johade.quotem.adapters.OnRecyclerItemClickListener;
 import com.johade.quotem.adapters.QuestionAdapter;
 import com.johade.quotem.adapters.QuizAdapter;
+import com.johade.quotem.model.DeleteQuestionResponse;
 import com.johade.quotem.model.GetQuizQuestionsResponse;
 import com.johade.quotem.model.Question;
 import com.johade.quotem.service.QuoteMRepository;
@@ -82,10 +83,29 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
 
     @Override
     public void onItemClick(int itemPosition) {
+        Toast.makeText(this, adapter.getQuestion(itemPosition).question, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemLongClick(int itemPostion) {
-        Toast.makeText(this, "Long Click: " + adapter.getQuestion(itemPostion).question, Toast.LENGTH_SHORT).show();
+        Question question = adapter.getQuestion(itemPostion);
+        Call<DeleteQuestionResponse> call = repository.deleteQuestion(question.id);
+
+        call.enqueue(new Callback<DeleteQuestionResponse>() {
+            @Override
+            public void onResponse(Call<DeleteQuestionResponse> call, Response<DeleteQuestionResponse> response) {
+                if(response.isSuccessful()) {
+                    Toast.makeText(QuestionsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(QuestionsActivity.this, "Failed To Delete Question", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteQuestionResponse> call, Throwable t) {
+
+            }
+        });
     }
 }
