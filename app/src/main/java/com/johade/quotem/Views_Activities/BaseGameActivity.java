@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -132,6 +134,7 @@ public abstract class BaseGameActivity extends AppCompatActivity {
     }
 
     protected void addButtonClickListners() {
+
         View.OnClickListener clickedAnswerListener = v -> {
             Button b = (Button) v;
             disableButtons();
@@ -144,6 +147,7 @@ public abstract class BaseGameActivity extends AppCompatActivity {
             }
             Handler handler = new Handler();
             handler.postDelayed(() -> {
+                animation();
                 enableButtons();
                 resetQuestionColor();
                 if(!mViewModel.getGameOver().getValue()) {
@@ -160,6 +164,14 @@ public abstract class BaseGameActivity extends AppCompatActivity {
             finish();
             startActivity(getIntent());
         });
+    }
+
+    protected void animation(){
+        Animation newTextAnimation = AnimationUtils.loadAnimation(this, R.anim.new_answer_animation);
+        answerOne.startAnimation(newTextAnimation);
+        answerTwo.startAnimation(newTextAnimation);
+        answerThree.startAnimation(newTextAnimation);
+        answerFour.startAnimation(newTextAnimation);
     }
 
     private Button findCorrectButton(String correctMovie) {
