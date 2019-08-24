@@ -53,17 +53,6 @@
         android:layout_below="@id/answerTwo"
         android:text="Answer 3" />
 
-    <Button
-        android:id="@+id/answerFour"
-        android:layout_width="match_parent"
-        android:layout_height="65dip"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/custom_button"
-        android:layout_below="@id/answerThree"
-        android:text="Answer 4" />
-
     <ProgressBar
         android:id="@+id/retrievingProgress"
         style="?android:attr/progressBarStyle"
@@ -75,5 +64,16 @@
         android:layout_marginBottom="8dp"
         android:indeterminate="true"
         android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/answerFour"
+        android:layout_width="match_parent"
+        android:layout_height="65dip"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/custom_button"
+        android:layout_below="@id/answerThree"
+        android:text="Answer 4" />
 
 </RelativeLayout>

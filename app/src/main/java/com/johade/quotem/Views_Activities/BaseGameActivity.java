@@ -105,10 +105,13 @@ public abstract class BaseGameActivity extends AppCompatActivity {
 
     protected void resetQuestionColor() {
         Drawable defaultDrawable = ContextCompat.getDrawable(this, R.drawable.custom_button);
+        Drawable defaultDrawable1 = ContextCompat.getDrawable(this, R.drawable.custom_button);
+        Drawable defaultDrawable2 = ContextCompat.getDrawable(this, R.drawable.custom_button);
+        Drawable defaultDrawable3 = ContextCompat.getDrawable(this, R.drawable.custom_button);
         answerOne.setBackground(defaultDrawable);
-        answerTwo.setBackground(defaultDrawable);
-        answerThree.setBackground(defaultDrawable);
-        answerFour.setBackground(defaultDrawable);
+        answerTwo.setBackground(defaultDrawable1);
+        answerThree.setBackground(defaultDrawable2);
+        answerFour.setBackground(defaultDrawable3);
     }
 
     protected void showRetrieveProgress(){
@@ -153,12 +156,9 @@ public abstract class BaseGameActivity extends AppCompatActivity {
         answerTwo.setOnClickListener(clickedAnswerListener);
         answerThree.setOnClickListener(clickedAnswerListener);
         answerFour.setOnClickListener(clickedAnswerListener);
-        playAgain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(getIntent());
-            }
+        playAgain.setOnClickListener(view -> {
+            finish();
+            startActivity(getIntent());
         });
     }
 
