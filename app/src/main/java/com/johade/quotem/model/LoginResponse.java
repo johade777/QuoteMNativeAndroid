@@ -1,4 +1,5 @@
 package com.johade.quotem.model;
+import java.util.Date;
 
 public class LoginResponse {
     private String message;

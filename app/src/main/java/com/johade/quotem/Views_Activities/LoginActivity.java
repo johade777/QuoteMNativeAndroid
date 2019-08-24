@@ -17,7 +17,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
     private QuoteMRepository repository;
     private TextInputEditText usernameEdit;
     private TextInputEditText passwordEdit;
@@ -29,15 +28,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        repository = new QuoteMRepository(this);
         usernameEdit = findViewById(R.id.loginUsername);
         passwordEdit = findViewById(R.id.loginPassword);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
-        repository = new QuoteMRepository(this);
         loginButton.setOnClickListener(view -> login());
         registerButton.setOnClickListener(view -> register());
-
-        checkIfLoggedIn();
     }
 
     private void login(){
@@ -68,14 +65,15 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(LoginActivity.this, "Not Implemented", Toast.LENGTH_SHORT).show();
     }
 
-    private void checkIfLoggedIn(){
-        if(repository.getToken() != null && !repository.getToken().isEmpty()){
-            loggedIn();
-        }
-    }
-
     private void loggedIn(){
         Intent openActivity = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(openActivity);
+        finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 }

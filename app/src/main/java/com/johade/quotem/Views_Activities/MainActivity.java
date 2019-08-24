@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout(){
         repository.logout();
+        Intent openActivity = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(openActivity);
         this.finish();
     }
 
