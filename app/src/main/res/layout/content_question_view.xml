@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="10sp"
+    android:background="@drawable/color_gradient_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,6 +11,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner"
         android:gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:minHeight="85dp"
         android:text="Question"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -26,7 +27,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/custom_button"
         android:layout_below="@id/questionView"
         android:text="Answer 1" />
 
@@ -37,7 +38,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/custom_button"
         android:layout_below="@id/answerOne"
         android:text="Answer 2" />
 
@@ -48,7 +49,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/custom_button"
         android:layout_below="@id/answerTwo"
         android:text="Answer 3" />
 
@@ -59,7 +60,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/custom_button"
         android:layout_below="@id/answerThree"
         android:text="Answer 4" />
 

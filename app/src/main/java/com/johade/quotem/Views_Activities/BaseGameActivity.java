@@ -1,8 +1,11 @@
 package com.johade.quotem.Views_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.johade.quotem.R;
 import com.johade.quotem.model.Question;
 import com.johade.quotem.ViewModels.BaseGameViewModel;
 
@@ -72,36 +76,39 @@ public abstract class BaseGameActivity extends AppCompatActivity {
     }
 
     protected void highlightRightWrong(Button right) {
+        Drawable correct = ContextCompat.getDrawable(this, R.drawable.right_answer);
+        Drawable incorrect = ContextCompat.getDrawable(this, R.drawable.wrong_answer);
         if (answerOne == right) {
-            answerOne.setBackgroundColor(Color.GREEN);
+            answerOne.setBackground(correct);
         } else {
-            answerOne.setBackgroundColor(Color.RED);
+            answerOne.setBackground(incorrect);
         }
 
         if (answerTwo == right) {
-            answerTwo.setBackgroundColor(Color.GREEN);
+            answerTwo.setBackground(correct);
         } else {
-            answerTwo.setBackgroundColor(Color.RED);
+            answerTwo.setBackground(incorrect);
         }
 
         if (answerThree == right) {
-            answerThree.setBackgroundColor(Color.GREEN);
+            answerThree.setBackground(correct);
         } else {
-            answerThree.setBackgroundColor(Color.RED);
+            answerThree.setBackground(incorrect);
         }
 
         if (answerFour == right) {
-            answerFour.setBackgroundColor(Color.GREEN);
+            answerFour.setBackground(correct);
         } else {
-            answerFour.setBackgroundColor(Color.RED);
+            answerFour.setBackground(incorrect);
         }
     }
 
     protected void resetQuestionColor() {
-        answerOne.setBackgroundColor(Color.WHITE);
-        answerTwo.setBackgroundColor(Color.WHITE);
-        answerThree.setBackgroundColor(Color.WHITE);
-        answerFour.setBackgroundColor(Color.WHITE);
+        Drawable defaultDrawable = ContextCompat.getDrawable(this, R.drawable.custom_button);
+        answerOne.setBackground(defaultDrawable);
+        answerTwo.setBackground(defaultDrawable);
+        answerThree.setBackground(defaultDrawable);
+        answerFour.setBackground(defaultDrawable);
     }
 
     protected void showRetrieveProgress(){
