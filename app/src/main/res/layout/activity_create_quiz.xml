@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/color_gradient_background"
     android:orientation="vertical">
 
     <TextView
@@ -30,5 +31,6 @@
         android:id="@+id/createQuizButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_button"
         android:text="Create Quiz" />
 </LinearLayout>

@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful() && response.body().getAuthToken() != null) {
-                    //Toast.makeText(LoginActivity.this, "Token: " + response.body().getAuthToken(), Toast.LENGTH_LONG).show();
                     repository.setToken(response.body().getAuthToken());
                     loggedIn();
                 }

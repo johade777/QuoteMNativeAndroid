@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/color_gradient_background"
     android:orientation="vertical"
     tools:context=".Views_Activities.CreateQuestionActivity">
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
@@ -17,6 +19,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,70 +30,71 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/questionInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/questionInput"
                     android:hint="Question"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/answerInput"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:hint="Answer"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/answerInput"
-                        android:hint="Answer"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@android:color/white" />
-                </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/wrongOneInput"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:hint="Wrong Answer 1"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/wrongOneInput"
-                        android:hint="Wrong Answer 1"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@android:color/white" />
-                </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/wrongTwoInput"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:hint="Wrong Answer 2"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/wrongTwoInput"
-                        android:hint="Wrong Answer 2"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@android:color/white" />
-                </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/wrongThreeInput"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/wrongThreeInput"
-                        android:hint="Wrong Answer 3"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@android:color/white" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:hint="Wrong Answer 3"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/insertQuestionButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/custom_button"
                 android:text="Create Question" />
         </LinearLayout>
     </ScrollView>
