@@ -102,7 +102,7 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
         if (viewHolder instanceof QuizAdapter.QuizViewHolder) {
             Quiz swipedQuiz = adapter.getQuiz(viewHolder.getAdapterPosition());
             ConfirmDialog deleteAlert = new ConfirmDialog(swipedQuiz.getQuiz_name());
-            deleteAlert.show(getSupportFragmentManager(), "What");
+            deleteAlert.show(getSupportFragmentManager(), "ConfirmDeleteDialog");
             deleteQuizView = viewHolder;
         }
     }
@@ -136,7 +136,6 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
 
     @Override
     public void onDialogCancel(DialogFragment dialog) {
-        Toast.makeText(this, "Cancel Clicked", Toast.LENGTH_SHORT).show();
         item.clearView(mQuizRecycler, deleteQuizView);
         deleteQuizView = null;
     }

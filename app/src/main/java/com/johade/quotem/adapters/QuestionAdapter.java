@@ -46,6 +46,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         return mQuestions.size();
     }
 
+    public void removeQuestion(RecyclerView.ViewHolder holder){
+        mQuestions.remove(holder.getAdapterPosition());
+        notifyItemChanged(holder.getAdapterPosition());
+    }
+
     public void setmQuestions(List<Question> questions){
         this.mQuestions = questions;
         notifyDataSetChanged();
@@ -58,6 +63,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     public class QuestionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView questionText;
         private TextView answerText;
+        public View foreground;
+        public View background;
         private OnRecyclerItemClickListener onClickListener;
 
         public QuestionViewHolder(@NonNull View itemView, OnRecyclerItemClickListener onClickListener) {
@@ -65,6 +72,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             questionText = itemView.findViewById(R.id.questionItem);
             answerText = itemView.findViewById(R.id.answerItem);
             this.onClickListener = onClickListener;
+            this.foreground = itemView.findViewById(R.id.view_foreground);
+            this.background = itemView.findViewById(R.id.view_background);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }

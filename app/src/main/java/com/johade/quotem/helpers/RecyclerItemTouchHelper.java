@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.johade.quotem.adapters.QuestionAdapter;
 import com.johade.quotem.adapters.QuizAdapter;
 import com.johade.quotem.listeners.RecyclerItemTouchHelperListener;
 
@@ -33,26 +34,46 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        View foreground = ((QuizAdapter.QuizViewHolder)viewHolder).foreground;
+        View foreground = null;
+        if(viewHolder instanceof QuizAdapter.QuizViewHolder) {
+            foreground = ((QuizAdapter.QuizViewHolder) viewHolder).foreground;
+        }else if(viewHolder instanceof QuestionAdapter.QuestionViewHolder){
+            foreground = ((QuestionAdapter.QuestionViewHolder) viewHolder).foreground;
+        }
         getDefaultUIUtil().clearView(foreground);
     }
 
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        View foreground = ((QuizAdapter.QuizViewHolder)viewHolder).foreground;
+        View foreground = null;
+        if(viewHolder instanceof QuizAdapter.QuizViewHolder) {
+            foreground = ((QuizAdapter.QuizViewHolder) viewHolder).foreground;
+        }else if(viewHolder instanceof QuestionAdapter.QuestionViewHolder){
+            foreground = ((QuestionAdapter.QuestionViewHolder) viewHolder).foreground;
+        }
         getDefaultUIUtil().onDraw(c, recyclerView, foreground, dX, dY, actionState, isCurrentlyActive);
     }
 
     @Override
     public void onChildDrawOver(@NonNull Canvas c, @NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        View foreground = ((QuizAdapter.QuizViewHolder)viewHolder).foreground;
+        View foreground = null;
+        if(viewHolder instanceof QuizAdapter.QuizViewHolder) {
+            foreground = ((QuizAdapter.QuizViewHolder) viewHolder).foreground;
+        }else if(viewHolder instanceof QuestionAdapter.QuestionViewHolder){
+            foreground = ((QuestionAdapter.QuestionViewHolder) viewHolder).foreground;
+        }
         getDefaultUIUtil().onDrawOver(c, recyclerView, foreground, dX, dY, actionState, isCurrentlyActive);
     }
 
     @Override
     public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
         if(viewHolder != null){
-            View foreground = ((QuizAdapter.QuizViewHolder)viewHolder).foreground;
+            View foreground = null;
+            if(viewHolder instanceof QuizAdapter.QuizViewHolder) {
+                foreground = ((QuizAdapter.QuizViewHolder) viewHolder).foreground;
+            }else if(viewHolder instanceof QuestionAdapter.QuestionViewHolder){
+                foreground = ((QuestionAdapter.QuestionViewHolder) viewHolder).foreground;
+            }
             getDefaultUIUtil().onSelected(foreground);
         }
     }
