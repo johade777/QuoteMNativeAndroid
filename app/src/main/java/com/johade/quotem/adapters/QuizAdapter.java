@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.johade.quotem.R;
+import com.johade.quotem.listeners.OnRecyclerItemClickListener;
 import com.johade.quotem.model.Quiz;
 
 import java.util.ArrayList;

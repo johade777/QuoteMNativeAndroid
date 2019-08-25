@@ -1,4 +1,4 @@
-package com.johade.quotem.adapters;
+package com.johade.quotem.listeners;
 
 import androidx.fragment.app.DialogFragment;
 

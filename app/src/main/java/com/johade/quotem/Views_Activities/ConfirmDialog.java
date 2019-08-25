@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.johade.quotem.adapters.ConfirmDialogListener;
+import com.johade.quotem.listeners.ConfirmDialogListener;
 
 public class ConfirmDialog extends DialogFragment {
     private ConfirmDialogListener listener;

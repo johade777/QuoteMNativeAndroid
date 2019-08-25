@@ -1,4 +1,4 @@
-package com.johade.quotem.adapters;
+package com.johade.quotem.helpers;
 
 import android.graphics.Canvas;
 import android.view.View;
@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.johade.quotem.adapters.QuizAdapter;
+import com.johade.quotem.listeners.RecyclerItemTouchHelperListener;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private RecyclerItemTouchHelperListener listener;

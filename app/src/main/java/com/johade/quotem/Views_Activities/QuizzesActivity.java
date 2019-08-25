@@ -1,34 +1,23 @@
 package com.johade.quotem.Views_Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
 import com.johade.quotem.R;
-import com.johade.quotem.adapters.ConfirmDialogListener;
-import com.johade.quotem.adapters.OnRecyclerItemClickListener;
+import com.johade.quotem.listeners.ConfirmDialogListener;
+import com.johade.quotem.listeners.OnRecyclerItemClickListener;
 import com.johade.quotem.adapters.QuizAdapter;
-import com.johade.quotem.adapters.RecyclerItemTouchHelper;
-import com.johade.quotem.adapters.RecyclerItemTouchHelperListener;
+import com.johade.quotem.helpers.RecyclerItemTouchHelper;
+import com.johade.quotem.listeners.RecyclerItemTouchHelperListener;
 import com.johade.quotem.model.DeleteQuizResponse;
 import com.johade.quotem.model.GetQuizzesResponse;
 import com.johade.quotem.model.Quiz;
@@ -39,14 +28,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItemClickListener, RecyclerItemTouchHelperListener, ConfirmDialogListener {
-    private RecyclerView mQuizReclcyer;
+    private RecyclerView mQuizRecycler;
     private Button createQuizButton;
     private QuizAdapter adapter;
     private QuoteMRepository repository;
     private View rootLayout;
     private Drawable deleteIcon;
     private RecyclerView.ViewHolder deleteQuizView;
-    ItemTouchHelper.SimpleCallback item;
+    private ItemTouchHelper.SimpleCallback item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,21 +43,21 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
         setContentView(R.layout.activity_quizzes);
 
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.delete_icon);
-        mQuizReclcyer = findViewById(R.id.quizRecyclerView);
+        mQuizRecycler = findViewById(R.id.quizRecyclerView);
         createQuizButton = findViewById(R.id.createQuizButton);
         rootLayout = findViewById(R.id.rootLayout);
 
         repository = new QuoteMRepository(this);
         createQuizButton.setOnClickListener(view -> createNewQuiz());
-        mQuizReclcyer.setLayoutManager(new LinearLayoutManager(this));
-        mQuizReclcyer.setHasFixedSize(true);
+        mQuizRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mQuizRecycler.setHasFixedSize(true);
 
         item = new RecyclerItemTouchHelper(0, ItemTouchHelper.RIGHT, this);
         adapter = new QuizAdapter(this);
-        mQuizReclcyer.setAdapter(adapter);
+        mQuizRecycler.setAdapter(adapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(item);
-        itemTouchHelper.attachToRecyclerView(mQuizReclcyer);
+        itemTouchHelper.attachToRecyclerView(mQuizRecycler);
     }
 
     private void getQuizzes() {
@@ -119,12 +108,6 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        getQuizzes();
-    }
-
-    @Override
     public void onDialogConfirm(DialogFragment dialog) {
         if (deleteQuizView != null) {
             Quiz toDeleteQuiz = adapter.getQuiz(deleteQuizView.getAdapterPosition());
@@ -154,7 +137,13 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
     @Override
     public void onDialogCancel(DialogFragment dialog) {
         Toast.makeText(this, "Cancel Clicked", Toast.LENGTH_SHORT).show();
-        item.clearView(mQuizReclcyer, deleteQuizView);
+        item.clearView(mQuizRecycler, deleteQuizView);
         deleteQuizView = null;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getQuizzes();
     }
 }

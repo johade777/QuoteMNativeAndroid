@@ -1,4 +1,4 @@
-package com.johade.quotem.adapters;
+package com.johade.quotem.listeners;
 
 public interface OnRecyclerItemClickListener {
     void onItemClick(int itemPosition);

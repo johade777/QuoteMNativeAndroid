@@ -1,7 +1,6 @@
 package com.johade.quotem.Views_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,9 +10,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.johade.quotem.R;
-import com.johade.quotem.adapters.OnRecyclerItemClickListener;
+import com.johade.quotem.listeners.OnRecyclerItemClickListener;
 import com.johade.quotem.adapters.QuestionAdapter;
-import com.johade.quotem.adapters.QuizAdapter;
 import com.johade.quotem.model.DeleteQuestionResponse;
 import com.johade.quotem.model.GetQuizQuestionsResponse;
 import com.johade.quotem.model.Question;
