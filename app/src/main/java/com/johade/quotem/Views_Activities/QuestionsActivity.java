@@ -97,26 +97,7 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
     }
 
     @Override
-    public void onItemLongClick(int itemPostion) {
-//        Question question = adapter.getQuestion(itemPostion);
-//        Call<DeleteQuestionResponse> call = repository.deleteQuestion(question.id);
-//
-//        call.enqueue(new Callback<DeleteQuestionResponse>() {
-//            @Override
-//            public void onResponse(Call<DeleteQuestionResponse> call, Response<DeleteQuestionResponse> response) {
-//                if(response.isSuccessful()) {
-//                    Toast.makeText(QuestionsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    Toast.makeText(QuestionsActivity.this, "Failed To Delete Question", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<DeleteQuestionResponse> call, Throwable t) {
-//
-//            }
-//        });
+    public void onItemLongClick(int itemPosition) {
     }
 
     @Override
