@@ -2,7 +2,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_margin="5dp"
     android:background="@drawable/color_gradient_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="5dp"
         android:id="@+id/ScoreLayout">
         <TextView
             android:text="Game Over"
@@ -42,6 +42,7 @@
         android:id="@+id/highScoreView"
         android:layout_below="@id/ScoreLayout"
         android:visibility="gone"
+        android:layout_margin="5dp"
         android:orientation="vertical">
         <TextView
             android:text="New High Score!"
@@ -75,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum = "2"
+        android:layout_margin="5dp"
         android:layout_below="@id/highScoreView"
         android:id="@+id/newGameView" >
         <Button

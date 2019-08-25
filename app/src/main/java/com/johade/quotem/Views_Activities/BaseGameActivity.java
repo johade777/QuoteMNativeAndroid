@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import com.johade.quotem.model.Question;
 import com.johade.quotem.ViewModels.BaseGameViewModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class BaseGameActivity extends AppCompatActivity {
     protected TextView questionView;
@@ -133,7 +135,7 @@ public abstract class BaseGameActivity extends AppCompatActivity {
         answerFour.setText(randomAnswers.get(3));
     }
 
-    protected void addButtonClickListners() {
+    protected void addButtonClickListeners() {
 
         View.OnClickListener clickedAnswerListener = v -> {
             Button b = (Button) v;
@@ -142,7 +144,7 @@ public abstract class BaseGameActivity extends AppCompatActivity {
             if(isCorrect){
                 highlightRightWrong(b);
             }else{
-                Button correctMovieButton = findCorrectButton(mViewModel.getCurrentQuestion().getValue().answer);
+                Button correctMovieButton = findCorrectButton(Objects.requireNonNull(mViewModel.getCurrentQuestion().getValue()).answer);
                 highlightRightWrong(correctMovieButton);
             }
             Handler handler = new Handler();
@@ -163,6 +165,11 @@ public abstract class BaseGameActivity extends AppCompatActivity {
         playAgain.setOnClickListener(view -> {
             finish();
             startActivity(getIntent());
+        });
+        mainMenuButton.setOnClickListener(view -> {
+            Intent openActivity = new Intent(BaseGameActivity.this, MainActivity.class);
+            startActivity(openActivity);
+            finish();
         });
     }
 

@@ -15,54 +15,30 @@ public class EndlessGameActivity extends BaseGameActivity {
         viewSetUp();
         mViewModel = new EndlessGameViewModel(this);
 
-        mViewModel.getTimeUntilStart().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer startTime) {
-                startTimerTextView.setText(startTime.toString());
-                if(startTime <= 0){
-                    showGameView();
-                }
+        mViewModel.getTimeUntilStart().observe(this, startTime -> {
+            startTimerTextView.setText(startTime.toString());
+            if(startTime <= 0){
+                showGameView();
             }
         });
 
-        mViewModel.getPlayerScore().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer score) {
-                questionCountTextView.setText("Score: " + score);
+        mViewModel.getPlayerScore().observe(this, score -> questionCountTextView.setText("Score: " + score));
+
+        mViewModel.getPlayerLives().observe(this, remainLives -> livesTextView.setText("Lives: " + remainLives));
+
+        mViewModel.getIsRetrievingQuestions().observe(this, isRetrieving -> {
+            if(isRetrieving){
+                showRetrieveProgress();
+            }else{
+                hideRetrieveProgress();
             }
         });
 
-        mViewModel.getPlayerLives().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer remainLives) {
-                livesTextView.setText("Lives: " + remainLives);
-            }
-        });
+        mViewModel.getCurrentQuestion().observe(this, this::displayQuestion);
 
-        mViewModel.getIsRetrievingQuestions().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isRetrieving) {
-                if(isRetrieving){
-                    showRetrieveProgress();
-                }else{
-                    hideRetrieveProgress();
-                }
-            }
-        });
-
-        mViewModel.getCurrentQuestion().observe(this, new Observer<Question>() {
-            @Override
-            public void onChanged(Question question) {
-                displayQuestion(question);
-            }
-        });
-
-        mViewModel.getGameOver().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean gameOver) {
-                if(gameOver) {
-                    showGameOver();
-                }
+        mViewModel.getGameOver().observe(this, gameOver -> {
+            if(gameOver) {
+                showGameOver();
             }
         });
     }
@@ -88,7 +64,7 @@ public class EndlessGameActivity extends BaseGameActivity {
         highScoreView = findViewById(R.id.highScoreView);
         retrievingProgressBar = findViewById(R.id.retrievingProgress);
 
-        addButtonClickListners();
+        addButtonClickListeners();
     }
 
     @Override

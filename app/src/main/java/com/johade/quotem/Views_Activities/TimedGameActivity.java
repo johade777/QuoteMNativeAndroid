@@ -16,70 +16,41 @@ public class TimedGameActivity extends BaseGameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basic_game);
+        setContentView(R.layout.activity_timed_game);
         viewSetUp();
         mViewModel = new TimedGameViewModel(this);
 
-        mViewModel.getTimeUntilStart().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer startTime) {
-                startTimerTextView.setText(startTime.toString());
-                if(startTime <= 0){
-                    showGameView();
-                    ((TimedGameViewModel) mViewModel).beginGameTimer();
-                }
+        mViewModel.getTimeUntilStart().observe(this, startTime -> {
+            startTimerTextView.setText(startTime.toString());
+            if(startTime <= 0){
+                showGameView();
+                ((TimedGameViewModel) mViewModel).beginGameTimer();
             }
         });
 
-        mViewModel.getPlayerLives().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer remainLives) {
-                livesTextView.setText("Lives: " + remainLives);
+        mViewModel.getPlayerLives().observe(this, remainLives -> livesTextView.setText("Lives: " + remainLives));
+
+        mViewModel.getQuestionCount().observe(this, currentQuestionNumber -> questionCountTextView.setText(currentQuestionNumber.toString() + "/10"));
+
+        mViewModel.getIsRetrievingQuestions().observe(this, isRetrieving -> {
+            if(isRetrieving){
+                showRetrieveProgress();
+            }else{
+                hideRetrieveProgress();
             }
         });
 
-        mViewModel.getQuestionCount().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer currentQuestionNumber) {
-                questionCountTextView.setText(currentQuestionNumber.toString() + "/10");
+        mViewModel.getCurrentQuestion().observe(this, question -> displayQuestion(question));
+
+        mViewModel.getGameOver().observe(this, gameOver -> {
+            if(gameOver) {
+                ((TimedGameViewModel) mViewModel).stopGameTimer();
+                showGameOver();
+
             }
         });
 
-        mViewModel.getIsRetrievingQuestions().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isRetrieving) {
-                if(isRetrieving){
-                    showRetrieveProgress();
-                }else{
-                    hideRetrieveProgress();
-                }
-            }
-        });
-
-        mViewModel.getCurrentQuestion().observe(this, new Observer<Question>() {
-            @Override
-            public void onChanged(Question question) {
-                displayQuestion(question);
-            }
-        });
-
-        mViewModel.getGameOver().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean gameOver) {
-                if(gameOver) {
-                    ((TimedGameViewModel) mViewModel).stopGameTimer();
-                    showGameOver();
-
-                }
-            }
-        });
-
-        mViewModel.getGameTime().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer remainingTime) {
-                gameTimerTextView.setText(String.format("%d:%02d", 00, remainingTime));
-            }
-        });
+        mViewModel.getGameTime().observe(this, remainingTime -> gameTimerTextView.setText(String.format("%d:%02d", 00, remainingTime)));
     }
 
     private void viewSetUp(){
@@ -104,7 +75,7 @@ public class TimedGameActivity extends BaseGameActivity {
         highScoreView = findViewById(R.id.highScoreView);
         retrievingProgressBar = findViewById(R.id.retrievingProgress);
 
-        addButtonClickListners();
+        addButtonClickListeners();
     }
 
     @Override
