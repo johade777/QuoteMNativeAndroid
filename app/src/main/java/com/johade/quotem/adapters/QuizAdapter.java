@@ -60,6 +60,8 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         private TextView quizId;
         private TextView createdDate;
         private TextView questionCount;
+        public View foreground;
+        public View background;
         private OnRecyclerItemClickListener onClickListener;
 
         public QuizViewHolder(@NonNull View itemView, OnRecyclerItemClickListener onClickListener) {
@@ -68,6 +70,8 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             quizId = itemView.findViewById(R.id.quizId);
             createdDate = itemView.findViewById(R.id.quizDate);
             questionCount = itemView.findViewById(R.id.questionNumber);
+            this.foreground = itemView.findViewById(R.id.view_foreground);
+            this.background = itemView.findViewById(R.id.view_background);
             this.onClickListener = onClickListener;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

@@ -1,54 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@android:color/background_light"
     android:layout_margin="8dp"
+    app:cardBackgroundColor="@android:color/background_light"
     app:cardCornerRadius="6dp"
     app:cardElevation="6dp">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        <LinearLayout
+            android:id="@+id/view_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/quizName"
+            <ImageView
+                android:id="@+id/deleteIcon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="5dp"
+                android:src="@drawable/delete_icon"
+                app:srcCompat="@drawable/delete_icon"
+                tools:srcCompat="@drawable/delete_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/deleteIcon"
+                android:layout_gravity="center_vertical"
+                android:text="Delete" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/view_foreground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/quizId"
-            android:text="Quiz Name: Place Holder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:elevation="3dp"
+            android:padding="10dp">
 
-        <TextView
-            android:id="@+id/quizId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Quiz Id: 11"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/quizName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/quizId"
+                android:text="Quiz Name: Place Holder"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/quizDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/quizName"
-            android:text="Created Date: 7/29/2019"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/quizId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Quiz Id: 11"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <TextView
-            android:id="@+id/questionNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/quizId"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBaseline="@id/quizDate"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="2dp"
-            android:text="10 Questions"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/quizDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quizName"
+                android:text="Created Date: 7/29/2019"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/questionNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quizId"
+                android:layout_alignBaseline="@id/quizDate"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="2dp"
+                android:text="10 Questions"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        </RelativeLayout>
 </androidx.cardview.widget.CardView>
