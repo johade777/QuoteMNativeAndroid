@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful() && response.body().getAuthToken() != null) {
-                    Toast.makeText(LoginActivity.this, "Token: " + response.body().getAuthToken(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(LoginActivity.this, "Token: " + response.body().getAuthToken(), Toast.LENGTH_LONG).show();
                     repository.setToken(response.body().getAuthToken());
                     loggedIn();
                 }
@@ -62,7 +62,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void register(){
-        Toast.makeText(LoginActivity.this, "Not Implemented", Toast.LENGTH_SHORT).show();
+        Intent openActivity = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(openActivity);
     }
 
     private void loggedIn(){

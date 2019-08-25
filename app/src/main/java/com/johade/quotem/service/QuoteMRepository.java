@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.johade.quotem.model.CreateUserResponse;
 import com.johade.quotem.model.DeleteQuestionResponse;
 import com.johade.quotem.model.GetQuizQuestionsResponse;
 import com.johade.quotem.model.GetQuizzesResponse;
@@ -34,7 +35,6 @@ public class QuoteMRepository {
     AppDatabase applicationDatabase;
     HighScoreDao highScoreDao;
     SharedPreferences preferences;
-    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     public QuoteMRepository(Context applicationContext){
         this.applicationContext = applicationContext;
@@ -70,6 +70,10 @@ public class QuoteMRepository {
 
     public Call<LoginResponse> login(String username, String password){
         return userService.login(username, password);
+    }
+
+    public Call<CreateUserResponse> createUser(String username, String password, String email){
+        return userService.createNewUser(username, password, email);
     }
 
     public Call<GetQuizzesResponse> getUserQizzes(){
@@ -119,6 +123,8 @@ public class QuoteMRepository {
 
 
 
+
+//    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     //    public Flowable<Highscore> getLowestHighscore(){
 //        mDisposable.add(highScoreDao.getLowestHighScore()
