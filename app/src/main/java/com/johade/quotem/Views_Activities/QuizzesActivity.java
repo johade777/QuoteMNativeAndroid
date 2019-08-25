@@ -1,10 +1,15 @@
 package com.johade.quotem.Views_Activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +19,7 @@ import android.widget.Toast;
 import com.johade.quotem.R;
 import com.johade.quotem.adapters.OnRecyclerItemClickListener;
 import com.johade.quotem.adapters.QuizAdapter;
+import com.johade.quotem.model.DeleteQuizResponse;
 import com.johade.quotem.model.GetQuizzesResponse;
 import com.johade.quotem.model.Quiz;
 import com.johade.quotem.service.QuoteMRepository;
@@ -27,6 +33,7 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
     private Button createQuizButton;
     private QuizAdapter adapter;
     private QuoteMRepository repository;
+    private AlertDialog deleteAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +47,42 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
         createQuizButton.setOnClickListener(view -> createNewQuiz());
         mQuizReclcyer.setLayoutManager(new LinearLayoutManager(this));
         mQuizReclcyer.setHasFixedSize(true);
+        createDialog();
+
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Quiz deletedQuiz = adapter.getQuiz(viewHolder.getAdapterPosition());
+//                Call<DeleteQuizResponse> call = repository.deleteQuiz(deletedQuiz.getQuiz_id());
+//                call.enqueue(new Callback<DeleteQuizResponse>() {
+//                    @Override
+//                    public void onResponse(Call<DeleteQuizResponse> call, Response<DeleteQuizResponse> response) {
+//                        if(response.isSuccessful()) {
+//                            adapter.removeQuiz(viewHolder);
+//                        }
+//                        else{
+//                            Toast.makeText(QuizzesActivity.this, "Failed To Delete Quiz", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<DeleteQuizResponse> call, Throwable t) {
+//
+//                    }
+//                });
+            }
+        };
 
         adapter = new QuizAdapter(this);
         mQuizReclcyer.setAdapter(adapter);
 
-        getQuizzes();
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
+        itemTouchHelper.attachToRecyclerView(mQuizReclcyer);
     }
 
     private void getQuizzes(){
@@ -67,10 +105,27 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
         });
     }
 
-
     private void createNewQuiz(){
         Intent intent = new Intent(this, CreateQuizActivity.class);
         startActivity(intent);
+    }
+
+    private void createDialog(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setMessage("Delete Quiz Whatever?");
+        alertBuilder.setCancelable(false);
+
+        alertBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
+
+        deleteAlert = alertBuilder.create();
+        deleteAlert.setTitle("Delete Quiz?");
     }
 
     @Override
@@ -84,5 +139,11 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
     @Override
     public void onItemLongClick(int itemPostion) {
         Toast.makeText(this, "Long Click: " + adapter.getQuiz(itemPostion).getQuiz_name(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getQuizzes();
     }
 }

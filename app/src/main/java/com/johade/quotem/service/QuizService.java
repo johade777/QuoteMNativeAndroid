@@ -1,5 +1,6 @@
 package com.johade.quotem.service;
 
+import com.johade.quotem.model.DeleteQuizResponse;
 import com.johade.quotem.model.GetQuizQuestionsResponse;
 import com.johade.quotem.model.InsertQuizResponse;
 
@@ -15,4 +16,7 @@ public interface QuizService {
 
     @POST("insertQuiz")
     Call<InsertQuizResponse> insertQuiz(@Header("quiz_name") String quizName, @Header("quiz_time") String quizTime, @Header("Authorization") String authToken);
+
+    @POST("deleteQuiz")
+    Call<DeleteQuizResponse> deleteQuiz(@Header("quiz_id") int quizId, @Header("Authorization") String authToken);
 }

@@ -46,8 +46,13 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         notifyDataSetChanged();
     }
 
-    public Quiz getQuiz(int postion){
-        return mQuizzes.get(postion);
+    public Quiz getQuiz(int position){
+        return mQuizzes.get(position);
+    }
+
+    public void removeQuiz(RecyclerView.ViewHolder holder){
+        mQuizzes.remove(holder.getAdapterPosition());
+        notifyItemChanged(holder.getAdapterPosition());
     }
 
     public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

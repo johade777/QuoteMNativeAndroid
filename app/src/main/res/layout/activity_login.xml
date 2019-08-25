@@ -31,26 +31,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:id="@+id/loginPassword"
-                android:hint="Password: "
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:id="@+id/loginUsername"
             android:hint="Username: "
+            android:inputType="text"
+            android:nextFocusForward="@+id/loginPassword"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:id="@+id/loginPassword"
+            android:hint="Password: "
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
     </com.google.android.material.textfield.TextInputLayout>
