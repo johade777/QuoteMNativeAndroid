@@ -15,7 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateQuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity {
     private TextInputEditText quizNameInput;
     private Button createQuizButton;
     private QuoteMRepository repository;
@@ -38,11 +38,11 @@ public class CreateQuizActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<InsertQuizResponse> call, Response<InsertQuizResponse> response) {
                 if(response.isSuccessful()) {
-                    Toast.makeText(CreateQuizActivity.this, "Quiz Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuizActivity.this, "Quiz Created", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else{
-                    Toast.makeText(CreateQuizActivity.this, "Failed To Create Quiz", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuizActivity.this, "Failed To Create Quiz", Toast.LENGTH_SHORT).show();
                 }
             }
 

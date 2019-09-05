@@ -21,12 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views_Activities.CreateUpdateQuestionActivity" />
-        <activity android:name=".Views_Activities.CreateQuizActivity" />
-        <activity android:name=".Views_Activities.QuestionsActivity" />
-        <activity android:name=".Views_Activities.QuizzesActivity" />
+        <activity android:name=".Views_Activities.QuestionActivity" />
+        <activity android:name=".Views_Activities.QuizActivity" />
+        <activity android:name=".Views_Activities.QuestionListActivity" />
+        <activity android:name=".Views_Activities.QuizListActivity" />
         <activity android:name=".Views_Activities.LoginActivity" />
-        <activity android:name=".Views_Activities.ActivitySelectGame" />
+        <activity android:name=".Views_Activities.SelectGameActivity" />
         <activity android:name=".Views_Activities.TimedGameActivity" />
         <activity
             android:name=".Views_Activities.EndlessGameActivity"

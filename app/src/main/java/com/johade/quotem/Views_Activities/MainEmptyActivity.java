@@ -19,13 +19,13 @@ public class MainEmptyActivity extends AppCompatActivity {
         repository = new QuoteMRepository(this);
         Intent activityIntent;
 
-//        if (checkIfLoggedIn()) {
-//            activityIntent = new Intent(this, MainActivity.class);
-//        } else {
-//            activityIntent = new Intent(this, LoginActivity.class);
-//        }
+        if (checkIfLoggedIn()) {
+            activityIntent = new Intent(this, MainActivity.class);
+        } else {
+            activityIntent = new Intent(this, LoginActivity.class);
+        }
 
-        activityIntent = new Intent(this, LoginActivity.class);
+//        activityIntent = new Intent(this, LoginActivity.class);
 
         startActivity(activityIntent);
         finish();

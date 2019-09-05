@@ -8,14 +8,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.johade.quotem.R;
-import com.johade.quotem.model.GetQuizzesResponse;
-import com.johade.quotem.model.LoginResponse;
 import com.johade.quotem.service.QuoteMRepository;
 
 import io.reactivex.disposables.CompositeDisposable;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private Button playGameButton;
@@ -37,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         userQuizzesButton = findViewById(R.id.userQuizzesButton);
         logoutButton = findViewById(R.id.logoutButton);
         playGameButton.setOnClickListener(v -> {
-            Intent openActivity = new Intent(MainActivity.this, ActivitySelectGame.class);
+            Intent openActivity = new Intent(MainActivity.this, SelectGameActivity.class);
             startActivity(openActivity);
         });
         highScoresButton.setOnClickListener(v -> viewHighScores());
@@ -48,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showUserQuizzes(){
-        Intent openActivity = new Intent(this, QuizzesActivity.class);
+        Intent openActivity = new Intent(this, QuizListActivity.class);
         startActivity(openActivity);
     }
 

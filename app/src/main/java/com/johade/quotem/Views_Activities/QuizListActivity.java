@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItemClickListener, RecyclerItemTouchHelperListener, ConfirmDialogListener {
+public class QuizListActivity extends AppCompatActivity implements OnRecyclerItemClickListener, RecyclerItemTouchHelperListener, ConfirmDialogListener {
     private RecyclerView mQuizRecycler;
     private Button createQuizButton;
     private QuizAdapter adapter;
@@ -70,7 +70,7 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
                 if (response.isSuccessful()) {
                     adapter.setmQuizzes(response.body().getQuizzes());
                 } else {
-                    Toast.makeText(QuizzesActivity.this, "Failed To Retrieve Quizzes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuizListActivity.this, "Failed To Retrieve Quizzes", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -82,13 +82,13 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
     }
 
     private void createNewQuiz() {
-        Intent intent = new Intent(this, CreateQuizActivity.class);
+        Intent intent = new Intent(this, QuizActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onItemClick(int itemPosition) {
-        Intent intent = new Intent(this, QuestionsActivity.class);
+        Intent intent = new Intent(this, QuestionListActivity.class);
         Quiz clickedQuiz = adapter.getQuiz(itemPosition);
         intent.putExtra("quiz_Id", clickedQuiz.getQuiz_id());
         startActivity(intent);
@@ -103,7 +103,7 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof QuizAdapter.QuizViewHolder) {
             Quiz swipedQuiz = adapter.getQuiz(viewHolder.getAdapterPosition());
-            ConfirmDialog deleteAlert = new ConfirmDialog(swipedQuiz.getQuiz_name());
+            ConfirmDialog deleteAlert = new ConfirmDialog(swipedQuiz.getQuiz_name(), ConfirmDialog.AlertType.QUIZ);
             deleteAlert.show(getSupportFragmentManager(), "ConfirmDeleteDialog");
             deleteQuizView = viewHolder;
         }
@@ -121,7 +121,7 @@ public class QuizzesActivity extends AppCompatActivity implements OnRecyclerItem
                         adapter.removeQuiz(deleteQuizView);
                         deleteQuizView = null;
                     } else {
-                        Toast.makeText(QuizzesActivity.this, "Failed To Delete Quiz", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizListActivity.this, "Failed To Delete Quiz", Toast.LENGTH_SHORT).show();
                         deleteQuizView = null;
                     }
                 }

@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuestionsActivity extends AppCompatActivity implements OnRecyclerItemClickListener, RecyclerItemTouchHelperListener, ConfirmDialogListener {
+public class QuestionListActivity extends AppCompatActivity implements OnRecyclerItemClickListener, RecyclerItemTouchHelperListener, ConfirmDialogListener {
     private RecyclerView mQuestionRecycler;
     private Button createQuestionButton;
     private QuoteMRepository repository;
@@ -74,7 +74,7 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
                 if (response.isSuccessful()) {
                     adapter.setmQuestions(response.body().getQuestions());
                 } else {
-                    Toast.makeText(QuestionsActivity.this, "Failed To Retrieve Questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuestionListActivity.this, "Failed To Retrieve Questions", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -86,14 +86,14 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
     }
 
     private void createQuestion() {
-        Intent intent = new Intent(this, CreateUpdateQuestionActivity.class);
+        Intent intent = new Intent(this, QuestionActivity.class);
         intent.putExtra("quiz_Id", quiz_id);
         startActivity(intent);
     }
 
     @Override
     public void onItemClick(int itemPosition) {
-        Intent intent = new Intent(this, CreateUpdateQuestionActivity.class);
+        Intent intent = new Intent(this, QuestionActivity.class);
         Question clickedQuestion = adapter.getQuestion(itemPosition);
         intent.putExtra("question", clickedQuestion);
         intent.putExtra("quiz_Id", quiz_id);
@@ -118,19 +118,19 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
                         adapter.removeQuestion(deleteQuestionView);
                         deleteQuestionView = null;
                     } else {
-                        Toast.makeText(QuestionsActivity.this, "Failed To Delete Question", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuestionListActivity.this, "Failed To Delete Question", Toast.LENGTH_SHORT).show();
                         deleteQuestionView = null;
                     }
                 }
 
                 @Override
                 public void onFailure(Call<DeleteQuestionResponse> call, Throwable t) {
-                    Toast.makeText(QuestionsActivity.this, "Failed To Delete Question", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuestionListActivity.this, "Failed To Delete Question", Toast.LENGTH_SHORT).show();
                     deleteQuestionView = null;
                 }
             });
         }else{
-            Toast.makeText(QuestionsActivity.this, "Failed To Delete Question", Toast.LENGTH_SHORT).show();
+            Toast.makeText(QuestionListActivity.this, "Failed To Delete Question", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -145,8 +145,8 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof QuestionAdapter.QuestionViewHolder) {
             Question swipedQuestion = adapter.getQuestion(viewHolder.getAdapterPosition());
-            ConfirmDialog deleteAlert = new ConfirmDialog(swipedQuestion.question);
-            deleteAlert.show(getSupportFragmentManager(), "What");
+            ConfirmDialog deleteAlert = new ConfirmDialog(swipedQuestion.question, ConfirmDialog.AlertType.QUESTION);
+            deleteAlert.show(getSupportFragmentManager(), "deleteAlert");
             deleteQuestionView = viewHolder;
         }
     }

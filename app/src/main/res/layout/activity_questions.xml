@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/rootLayout"
     android:background="@drawable/color_gradient_background"
-    tools:context=".Views_Activities.QuizzesActivity">
+    tools:context=".Views_Activities.QuizListActivity">
 
     <Button
         android:id="@+id/createQuestionButton"

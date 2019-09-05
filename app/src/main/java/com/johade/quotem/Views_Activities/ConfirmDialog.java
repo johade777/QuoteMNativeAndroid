@@ -13,31 +13,35 @@ import androidx.fragment.app.DialogFragment;
 import com.johade.quotem.listeners.ConfirmDialogListener;
 
 public class ConfirmDialog extends DialogFragment {
+    public static final int QUIZ = 0;
+    public static final int QUESTION = 1;
+    public static enum AlertType{
+        QUIZ,
+        QUESTION;
+    }
     private ConfirmDialogListener listener;
     private String message;
+    private AlertType type;
 
-    public ConfirmDialog(String message){
+    public ConfirmDialog(String message, AlertType type){
         this.message = message;
+        this.type = type;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        String alertType;
+        if(this.type == AlertType.QUESTION){
+            alertType = "Question";
+        }else{
+            alertType = "Quiz";
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Delete Quiz?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        listener.onDialogConfirm(ConfirmDialog.this);
-                    }
-                })
-                .setMessage("Delete quiz " + message + "?")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        listener.onDialogCancel(ConfirmDialog.this);
-                    }
-                });
+        builder.setMessage("Delete " + alertType + "?")
+                .setPositiveButton("Delete", (dialogInterface, i) -> listener.onDialogConfirm(ConfirmDialog.this))
+                .setMessage("Delete " + alertType + " " + message + "?")
+                .setNegativeButton("Cancel", (dialogInterface, i) -> listener.onDialogCancel(ConfirmDialog.this));
         return builder.create();
     }
 

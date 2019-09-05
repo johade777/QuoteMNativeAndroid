@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class ActivitySelectGame extends AppCompatActivity {
+public class SelectGameActivity extends AppCompatActivity {
     private Button timedGame;
     private Button endlessGame;
     private Button verseGame;
@@ -26,16 +26,16 @@ public class ActivitySelectGame extends AppCompatActivity {
         userGame = findViewById(R.id.userGame);
 
         timedGame.setOnClickListener(view -> {
-            Intent openActivity = new Intent(ActivitySelectGame.this, TimedGameActivity.class);
+            Intent openActivity = new Intent(SelectGameActivity.this, TimedGameActivity.class);
             startActivity(openActivity);
         });
 
         endlessGame.setOnClickListener(view -> {
-            Intent openActivity = new Intent(ActivitySelectGame.this, EndlessGameActivity.class);
+            Intent openActivity = new Intent(SelectGameActivity.this, EndlessGameActivity.class);
             startActivity(openActivity);
         });
 
-        View.OnClickListener not_implemented = view -> Toast.makeText(ActivitySelectGame.this, "Not Implemented", Toast.LENGTH_LONG).show();
+        View.OnClickListener not_implemented = view -> Toast.makeText(SelectGameActivity.this, "Not Implemented", Toast.LENGTH_LONG).show();
         verseGame.setOnClickListener(not_implemented);
         userGame.setOnClickListener(not_implemented);
     }

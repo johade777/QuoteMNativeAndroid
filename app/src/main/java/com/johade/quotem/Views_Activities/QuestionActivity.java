@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateUpdateQuestionActivity extends AppCompatActivity {
+public class QuestionActivity extends AppCompatActivity {
     private QuoteMRepository repository;
     private TextView headerText;
     private TextInputEditText questionInput;
@@ -76,11 +76,11 @@ public class CreateUpdateQuestionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<InsertQuestionResponse> call, Response<InsertQuestionResponse> response) {
                 if(response.isSuccessful()) {
-                    Toast.makeText(CreateUpdateQuestionActivity.this, "Question Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuestionActivity.this, "Question Created", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else{
-                    Toast.makeText(CreateUpdateQuestionActivity.this, "Failed To Create Question", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuestionActivity.this, "Failed To Create Question", Toast.LENGTH_SHORT).show();
                 }
             }
 

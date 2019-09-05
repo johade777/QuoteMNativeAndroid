@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/color_gradient_background"
     android:orientation="vertical"
-    tools:context=".Views_Activities.CreateUpdateQuestionActivity">
+    tools:context=".Views_Activities.QuestionActivity">
 
     <TextView
         android:id="@+id/header"
