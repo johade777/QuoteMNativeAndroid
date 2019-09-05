@@ -86,14 +86,19 @@ public class QuestionsActivity extends AppCompatActivity implements OnRecyclerIt
     }
 
     private void createQuestion() {
-        Intent intent = new Intent(this, CreateQuestionActivity.class);
+        Intent intent = new Intent(this, CreateUpdateQuestionActivity.class);
         intent.putExtra("quiz_Id", quiz_id);
         startActivity(intent);
     }
 
     @Override
     public void onItemClick(int itemPosition) {
-        Toast.makeText(this, adapter.getQuestion(itemPosition).question, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, CreateUpdateQuestionActivity.class);
+        Question clickedQuestion = adapter.getQuestion(itemPosition);
+        intent.putExtra("question", clickedQuestion);
+        intent.putExtra("quiz_Id", quiz_id);
+        startActivity(intent);
+
     }
 
     @Override

@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views_Activities.CreateQuestionActivity" />
+        <activity android:name=".Views_Activities.CreateUpdateQuestionActivity" />
         <activity android:name=".Views_Activities.CreateQuizActivity" />
         <activity android:name=".Views_Activities.QuestionsActivity" />
         <activity android:name=".Views_Activities.QuizzesActivity" />

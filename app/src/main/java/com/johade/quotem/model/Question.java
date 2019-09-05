@@ -1,11 +1,14 @@
 package com.johade.quotem.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Question {
+public class Question implements Parcelable {
     @SerializedName("Id")
     public int id;
 
@@ -34,7 +37,42 @@ public class Question {
         return answers;
     }
 
+    public Question(Parcel in) {
+        this.id = in.readInt();
+        this.question = in.readString();
+        this.answer = in.readString();
+        this.wrong1 = in.readString();
+        this.wrong2 = in.readString();
+        this.wrong3 = in.readString();
+    }
+
     public boolean isCorrect(String clickedText){
         return clickedText.equals(answer);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(question);
+        parcel.writeString(answer);
+        parcel.writeString(wrong1);
+        parcel.writeString(wrong2);
+        parcel.writeString(wrong3);
+    }
+
+    public static final Parcelable.Creator<Question> CREATOR = new Parcelable.Creator<Question>() {
+
+        public Question createFromParcel(Parcel in) {
+            return new Question(in);
+        }
+
+        public Question[] newArray(int size) {
+            return new Question[size];
+        }
+    };
 }

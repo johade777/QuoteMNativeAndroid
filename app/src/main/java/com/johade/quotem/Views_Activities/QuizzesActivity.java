@@ -1,22 +1,24 @@
 package com.johade.quotem.Views_Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.johade.quotem.R;
-import com.johade.quotem.listeners.ConfirmDialogListener;
-import com.johade.quotem.listeners.OnRecyclerItemClickListener;
 import com.johade.quotem.adapters.QuizAdapter;
 import com.johade.quotem.helpers.RecyclerItemTouchHelper;
+import com.johade.quotem.listeners.ConfirmDialogListener;
+import com.johade.quotem.listeners.OnRecyclerItemClickListener;
 import com.johade.quotem.listeners.RecyclerItemTouchHelperListener;
 import com.johade.quotem.model.DeleteQuizResponse;
 import com.johade.quotem.model.GetQuizzesResponse;
